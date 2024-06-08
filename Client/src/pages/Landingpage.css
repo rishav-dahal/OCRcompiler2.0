@@ -1,0 +1,26 @@
+:root {
+  --dark: #131417;
+  --dark-lighter: #1e1f26;
+  --grey: #e2e3e357;
+  --green-lighter: #47cf73;
+  --green: #248c46;
+  --white: #ffffff;
+}
+.container {
+  background-color: var(--dark);
+  min-height: 100vh;
+  width: 100%;
+  color: var(--white);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+.hero-section {
+  font-size: 50px;
+}
+.loginbtn{
+    border: none;
+    padding: 10px 25px;
+}
