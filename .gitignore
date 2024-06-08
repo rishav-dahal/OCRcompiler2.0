@@ -69,10 +69,10 @@ Thumbs.db
 *.sln
 
 # Docker
-**/Dockerfile
-**/docker-compose.yml
-docker-compose.yaml
-.dockerignore
+# **/Dockerfile
+# **/docker-compose.yml
+# docker-compose.yaml
+# .dockerignore
 
 # PostgreSQL
 pgdata/
