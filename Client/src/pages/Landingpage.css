@@ -8,7 +8,7 @@
 }
 .container {
   background-color: var(--dark);
-  min-height: 100vh;
+  min-height: 90vh;
   width: 100%;
   color: var(--white);
   display: flex;
@@ -23,4 +23,7 @@
 .loginbtn{
     border: none;
     padding: 10px 25px;
+}
+.landing-navbar{
+  padding: 2% 10%;
 }
