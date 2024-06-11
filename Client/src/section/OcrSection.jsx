@@ -29,11 +29,16 @@ function OcrSection({ onchangeHandler, code, handleRunClick }) {
       </div>
       <div className="code-editor">
         <Editor
+          className="monaco-wrapper"
           height="90vh"
           defaultLanguage="javascript"
           defaultValue="// some comment"
           theme="vs-dark"
           options={editorOptions}
+          value={code}
+          onChange={(e) => {
+            onchangeHandler(e);
+          }}
         />
         {/* <CodeMirror
           height="100%"
