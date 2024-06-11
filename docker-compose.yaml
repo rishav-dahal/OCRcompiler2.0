@@ -1,4 +1,3 @@
-version: '3.9'
 services:
   backend:
     build: ./server
@@ -11,14 +10,14 @@ services:
     # depends_on:
     #   - db
 
-  # frontend:
-  #   build: ./client
-  #   ports:
-  #     - "3000:3000"
-  #   volumes:
-  #     - ./client:/app
-  #   environment:
-  #     - CHOKIDAR_USEPOLLING=true
+  frontend:
+    build: ./client
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./client:/app
+    environment:
+      - CHOKIDAR_USEPOLLING=true
 
   # db:
   #   image: postgres:13
