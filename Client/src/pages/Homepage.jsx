@@ -1,7 +1,7 @@
 import { useState, useRef } from "react";
 import "../App.css";
 import ImageSection from "../section/ImageSection.jsx";
-// import OcrSection from "../section/OcrSection";
+import OcrSection from "../section/OcrSection";
 import OutputSection from "../section/OutputSection";
 import ErrorModal from "../section/ErrorModal";
 import axios from "axios";
@@ -175,11 +175,11 @@ function App() {
             progressBar={progressBar}
             handleReupload={handleReupload}
           />
-          {/* <OcrSection
+          <OcrSection
             code={code}
             onchangeHandler={oninputChangeHandler}
             handleRunClick={handleRunClick}
-          /> */}
+          />
           <OutputSection
             output={output}
             ref={ref}

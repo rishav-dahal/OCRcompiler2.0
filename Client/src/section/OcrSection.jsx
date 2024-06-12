@@ -1,11 +1,16 @@
 import React from "react";
 import { AiOutlineScan } from "react-icons/ai";
-import CodeMirror from "@uiw/react-codemirror";
-import { cpp } from "@codemirror/lang-cpp";
-import { EditorView } from "codemirror";
-import { dracula } from "@uiw/codemirror-theme-dracula";
+// import CodeMirror from "@uiw/react-codemirror";
+// import { cpp } from "@codemirror/lang-cpp";
+// import { EditorView } from "codemirror";
+// import { dracula } from "@uiw/codemirror-theme-dracula";
+import Editor from "@monaco-editor/react";
 
-function OcrSection({ onchangeHandler, code , handleRunClick}) {
+const editorOptions = {
+  wordWrap: "on",
+};
+
+function OcrSection({ onchangeHandler, code, handleRunClick }) {
   return (
     <div className="ocr-section">
       <div className="section-title">
@@ -13,9 +18,29 @@ function OcrSection({ onchangeHandler, code , handleRunClick}) {
           <AiOutlineScan className="section-title-icon" />
           OCR
         </div>
+        <div className="dropdown">
+          <select id="languages">
+            <option value="js">Javascript</option>
+            <option value="c">C</option>
+            <option value="cpp">C++</option>
+            <option value="python">Python</option>
+          </select>
+        </div>
       </div>
       <div className="code-editor">
-        <CodeMirror
+        <Editor
+          className="monaco-wrapper"
+          height="90vh"
+          defaultLanguage="javascript"
+          defaultValue="// some comment"
+          theme="vs-dark"
+          options={editorOptions}
+          value={code}
+          onChange={(e) => {
+            onchangeHandler(e);
+          }}
+        />
+        {/* <CodeMirror
           height="100%"
           theme={dracula}
           extensions={[cpp(), EditorView.lineWrapping]}
@@ -24,10 +49,12 @@ function OcrSection({ onchangeHandler, code , handleRunClick}) {
           onChange={(e)=>{onchangeHandler(e)}}
           value={code} 
           // onChangeCapture={(e)=>{onchangeHandler(e)}}
-        />
+        /> */}
       </div>
       <div className="ocr-btns">
-        <div className="compile-btn btn-primary" onClick={handleRunClick}>Compile</div>
+        <div className="compile-btn btn-primary" onClick={handleRunClick}>
+          Compile
+        </div>
         {/* <div className="prettify-btn btn-secondary">Prettify</div> */}
       </div>
     </div>

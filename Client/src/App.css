@@ -31,7 +31,7 @@ body {
   justify-content: space-between;
   align-items: center;
   color: var(--white);
-  padding: 2% 10%;
+  padding: 2% 0 2% 0;
 }
 .logo {
   font-family: "Poppins";
@@ -97,6 +97,7 @@ body {
 }
 .section-title {
   display: flex;
+  justify-content: space-between;
   height: 8%;
   border-bottom: 1px solid var(--grey);
 }
@@ -114,7 +115,7 @@ body {
   flex: 1;
   overflow: hidden;
 }
-.codemirror-wrapper {
+.monaco-wrapper {
   height: 100%;
   font-size: 1rem;
 }
@@ -219,7 +220,24 @@ body {
   width: 100%;
   border: none;
 }
-
+.dropdown {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+select {
+  border: none;
+  background: none;
+  border: 2px solid var(--grey);
+  color: var(--white);
+  padding: 5px 15px;
+  border-radius: 3px;
+  font-weight: 600;
+  margin-right: 10px;
+}
+option {
+  background-color: var(--dark);
+}
 @media only screen and (max-width: 900px) {
   .sections {
     display: flex;
