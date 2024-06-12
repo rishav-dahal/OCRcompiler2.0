@@ -1,6 +1,5 @@
 from rest_framework import serializers
 from .models import OCRProcess, CodeSnippet, User
-# from .ocr import run
 
 class CodeSnippetSerializer(serializers.ModelSerializer):
     class Meta:
@@ -44,4 +43,4 @@ class UserLoginSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(max_length=255, min_length=3)
     class Meta:
         model = User
-        fields = ["email", "password", "first_name", "last_name"]
+        fields = ["email", "password"]
