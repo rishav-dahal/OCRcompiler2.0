@@ -50,6 +50,11 @@ class Guest(models.Model):
 class CodeSnippet(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     guest = models.ForeignKey(Guest, on_delete=models.CASCADE, null=True, blank=True)
+    LANGUAGE_CHOICES = [
+        ('python', 'Python'),
+        ('java', 'Java'),
+        ('cpp', 'C++'),
+        ('c', 'C'),]
     text_content = models.TextField()
     formatted_code = models.TextField()
     language = models.CharField(max_length=100)
