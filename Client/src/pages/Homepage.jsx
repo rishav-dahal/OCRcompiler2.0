@@ -2,7 +2,7 @@ import { useState, useRef } from "react";
 import "../App.css";
 import ImageSection from "../section/ImageSection.jsx";
 import OcrSection from "../section/OcrSection";
-import OutputSection from "../section/OutputSection";
+// import OutputSection from "../section/OutputSection";
 import ErrorModal from "../section/ErrorModal";
 import axios from "axios";
 import Tesseract from "tesseract.js";
@@ -14,7 +14,7 @@ function App() {
   const [code, setCode] = useState("");
   const [output, setOutput] = useState("");
   const [input, setInput] = useState("");
-  const ref = useRef(null);
+  // const ref = useRef(null);
   const [modal, setModal] = useState(false);
   const [modalText, setModalText] = useState("");
   const [windowSize, setWindowSize] = useState();
@@ -68,17 +68,20 @@ function App() {
 
       try {
         const response = await axios.post(
-          "http://localhost:5000/image",
+          "http://localhost:8000/api/v1/upload/",
           formData
         );
         console.log(response);
-        fetch("/ocr")
-          .then((response) => response.json())
-          .then((data) => {
-            setData(data);
-            setCode(data.ocr);
-            console.log(code);
-          });
+        console.log(response.data.snippet);
+        setData(response.data.snippet.text_content);
+        setCode(response.data.snippet.text_content);
+        // fetch("/ocr")
+        //   .then((response) => response.json())
+        //   .then((data) => {
+        //     setData(data);
+        //     setCode(data.ocr);
+        //     console.log(code);
+        //   });
         //Handles the response from the backend if needed
       } catch (error) {
         console.error("Error uploading image:", error);
@@ -127,7 +130,7 @@ function App() {
       } else {
         setOutput(outputData.data.output);
       }
-      ref.current?.scrollIntoView({ behavior: "smooth" });
+      // ref.current?.scrollIntoView({ behavior: "smooth" });
     }
   };
 
@@ -180,12 +183,12 @@ function App() {
             onchangeHandler={oninputChangeHandler}
             handleRunClick={handleRunClick}
           />
-          <OutputSection
+          {/* <OutputSection
             output={output}
             ref={ref}
             input={input}
             handleInputChange={handleInputChange}
-          />
+          /> */}
         </div>
       </div>
     </div>
