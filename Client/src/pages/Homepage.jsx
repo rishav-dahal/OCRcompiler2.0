@@ -19,6 +19,7 @@ function App() {
   const [modalText, setModalText] = useState("");
   const [windowSize, setWindowSize] = useState();
   const [progressBar, setProgressBar] = useState(0);
+  const [extension, setExtension] = useState("code.txt");
 
   //Downloads the code as a txt file
   const downloadTxtFile = () => {
@@ -26,7 +27,8 @@ function App() {
       const element = document.createElement("a");
       const file = new Blob([code], { type: "text/plain" });
       element.href = URL.createObjectURL(file);
-      element.download = "code.txt";
+      // element.download = "code.txt";
+      element.download = `code.${extension}`;
       document.body.appendChild(element);
       element.click();
     } else {
@@ -37,6 +39,10 @@ function App() {
         setModalText("");
       }, 2000);
     }
+  };
+
+  const updateExtension = (e) => {
+    setExtension(e);
   };
 
   //For updating windowSize on resize
@@ -182,7 +188,7 @@ function App() {
             code={code}
             onchangeHandler={oninputChangeHandler}
             handleRunClick={handleRunClick}
-            
+            updateExtension={updateExtension}
           />
           {/* <OutputSection
             output={output}

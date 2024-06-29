@@ -10,11 +10,17 @@ const editorOptions = {
   wordWrap: "on",
 };
 
-function OcrSection({ onchangeHandler, code, handleRunClick }) {
+function OcrSection({
+  onchangeHandler,
+  code,
+  handleRunClick,
+  updateExtension,
+}) {
   const [language, setLanguage] = useState("javascript");
 
   const onLanguageChange = (e) => {
     setLanguage(e.target.value);
+    updateExtension(e.target.value);
   };
 
   return (
@@ -31,7 +37,7 @@ function OcrSection({ onchangeHandler, code, handleRunClick }) {
             </option>
             <option value="c">C</option>
             <option value="cpp">C++</option>
-            <option value="python">Python</option>
+            <option value="py">Python</option>
           </select>
         </div>
       </div>
