@@ -182,6 +182,7 @@ function App() {
             code={code}
             onchangeHandler={oninputChangeHandler}
             handleRunClick={handleRunClick}
+            
           />
           {/* <OutputSection
             output={output}
