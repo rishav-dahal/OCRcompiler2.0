@@ -94,6 +94,8 @@ def upload_image(request):
         # Determine the language and format the code accordingly
         formatted_code,language = format_code(processed_text)
 
+        if not formatted_code:
+            formatted_code = processed_text
         # Save the OCR process and code snippet
         snippet = CodeSnippet.objects.create(
             text_content=processed_text,
