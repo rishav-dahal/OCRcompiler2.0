@@ -19,8 +19,9 @@ def run_ocr(image_Name):
     image_output  = contures_detection(edged,img)
     
     #OCR section 
-    ocr_img = img_Processing(image_output)
-    ocr_text=py.image_to_string(ocr_img)
+    ocr_img = img_Processing(img)
+    config = "--oem 3 --psm 6"
+    ocr_text=py.image_to_string(ocr_img, config=config, lang='eng')
     
     #testing
     # cv2.imshow("test",f.rescaleFrame(img_bw))

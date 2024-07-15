@@ -1,35 +1,44 @@
-from rest_framework import serializers
+from rest_framework import serializers  
 from .models import OCRProcess, CodeSnippet, User
+from .services.code_formatter import format_code
+from django.db import transaction
 
 class CodeSnippetSerializer(serializers.ModelSerializer):
     class Meta:
         model = CodeSnippet
-        fields = ['id', 'text_content', 'formatted_code', 'language', 'created_at']
+        fields = ['id','formatted_code', 'language', 'created_at']
 
 class OCRProcessSerializer(serializers.ModelSerializer):
     snippet = CodeSnippetSerializer(read_only=True)
-    original_image = serializers.ImageField(write_only=True)
+    original_image = serializers.CharField(write_only=True)
 
     class Meta:
         model = OCRProcess
-        fields = ['id', 'snippet', 'original_image', 'processed_text', 'created_at']
+        fields = ['id', 'snippet', 'original_image', 'ocr_text', 'created_at']
 
     def create(self, validated_data):
-        original_image = validated_data.pop('original_image')
-        # processed_text = run(original_image)
-        formatted_code = "Formatted code from OCR"  # Replace with actual code formatting
+        original_image_path = validated_data.pop('original_image')
+        ocr_text = validated_data.pop('ocr_text')
 
-        snippet = CodeSnippet.objects.create(
-            # text_content=processed_text,
-            formatted_code=formatted_code,
-            language="python"  # Determine the language as needed
-        )
+        formatted_code, language = format_code(ocr_text)
 
-        ocr_process = OCRProcess.objects.create(
-            snippet=snippet,
-            original_image=original_image,
-            # processed_text=processed_text
-        )
+        if not formatted_code:
+            formatted_code = ocr_text
+        
+        try:
+            with transaction.atomic():
+                snippet = CodeSnippet.objects.create(
+                    formatted_code=formatted_code,
+                    language=language
+                )
+                print("Rishav")
+                ocr_process = OCRProcess.objects.create(
+                    snippet=snippet,
+                    original_image=original_image_path,
+                    ocr_text=ocr_text
+                )
+        except Exception as e:
+            raise serializers.ValidationError(str(e))
 
         return ocr_process
 

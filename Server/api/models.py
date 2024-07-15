@@ -55,7 +55,6 @@ class CodeSnippet(models.Model):
         ('java', 'Java'),
         ('cpp', 'C++'),
         ('c', 'C'),]
-    text_content = models.TextField()
     formatted_code = models.TextField()
     language = models.CharField(max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -66,7 +65,7 @@ class CodeSnippet(models.Model):
 class OCRProcess(models.Model):
     snippet = models.OneToOneField(CodeSnippet, on_delete=models.CASCADE)
     original_image = models.ImageField(upload_to='ocr_images/')
-    processed_text = models.TextField()
+    ocr_text = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

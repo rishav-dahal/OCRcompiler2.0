@@ -14,7 +14,7 @@ from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 from .services.methods import allowed_file
 from .services.ocr import run_ocr
-from .services.code_formatter import format_code
+
 
 UPLOAD_FOLDER = "Images"
 
@@ -46,8 +46,8 @@ class OCRProcessCreateView(generics.CreateAPIView):
 def login(request):
     serializer = UserLoginSerializer(data=request.data)
     if serializer.is_valid():
-        email= serializer.data.get('email')
-        password = serializer.data.get('password')
+        email= serializer.validated_data.get('email')
+        password = serializer.validated_data.get('password')
         user = authenticate(email=email,password=password)
         if user is not None:
             token = get_tokens_for_user(user)
@@ -85,32 +85,22 @@ def upload_image(request):
     
     if image and allowed_file(image.name):
         filename = secure_filename(image.name)
-        file_path = os.path.join(settings.MEDIA_ROOT, filename)
+        file_path = os.path.join(settings.MEDIA_ROOT,'uploads', filename)
         path = default_storage.save(file_path, ContentFile(image.read()))
         
-        # Perform OCR on the uploaded image
-        processed_text = run_ocr(path)
+        ocr_text = run_ocr(path)
+        print(ocr_text)
+        data = {
+            'original_image': path,
+            'ocr_text': ocr_text
+        }
+        print("Rishav")
+        serializer = OCRProcessSerializer(data=data)
+        print(serializer)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
-        # Determine the language and format the code accordingly
-        formatted_code,language = format_code(processed_text)
-
-        if not formatted_code:
-            formatted_code = processed_text
-        # Save the OCR process and code snippet
-        snippet = CodeSnippet.objects.create(
-            text_content=processed_text,
-            formatted_code=formatted_code,
-            language=language
-        )
-
-        ocr_process = OCRProcess.objects.create(
-            original_image=path,
-            processed_text=processed_text,
-            snippet=snippet
-        )
-
-        serializer = OCRProcessSerializer(ocr_process)
-
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
-    else:
-        return Response({'msg': 'Image upload failed. Invalid file format.'}, status=status.HTTP_400_BAD_REQUEST)
+    return Response({'msg': 'Image upload failed. Invalid file format.'}, status=status.HTTP_400_BAD_REQUEST)
