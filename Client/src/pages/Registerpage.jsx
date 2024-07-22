@@ -3,11 +3,11 @@ import "./Loginpage.css";
 import { useNavigate } from "react-router-dom";
 
 const Registerpage = () => {
-  const [username, setUsername] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
-
 
   const navigate = useNavigate();
 
@@ -20,9 +20,10 @@ const Registerpage = () => {
     event.preventDefault();
     try {
       const formData = new FormData();
-      formData.append("username", username);
       formData.append("email", email);
       formData.append("password", password);
+      formData.append("first_name", firstName);
+      formData.append("last_name", lastName);
 
       const response = await fetch("http://localhost:8000/api/v1/register/", {
         method: "POST",
@@ -61,11 +62,20 @@ const Registerpage = () => {
           <form className="input-form" onSubmit={handleSubmit}>
             <input
               type="text"
-              id="username"
-              placeholder="Enter username"
+              id="firstName"
+              placeholder="Enter first name"
               className="input-field"
               onChange={(e) => {
-                setUsername(e.target.value);
+                setFirstName(e.target.value);
+              }}
+            ></input>
+            <input
+              type="text"
+              id="lastName"
+              placeholder="Enter last name"
+              className="input-field"
+              onChange={(e) => {
+                setLastName(e.target.value);
               }}
             ></input>
             <input
