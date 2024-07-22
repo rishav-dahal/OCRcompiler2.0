@@ -28,8 +28,8 @@ const Loginpage = () => {
 
       if (response.ok) {
         const data = await response.json();
-        localStorage.setItem("token", data.token);
-
+        localStorage.setItem("accessToken", data.token.accessToken);
+        localStorage.setItem("refreshToken", data.token.refreshToken);
         // Route to dashboard
         navigate("/dashboard");
       } else {
