@@ -17,12 +17,13 @@ const Loginpage = () => {
   async function handleSubmit(event) {
     event.preventDefault();
     try {
+      const formData = new FormData();
+      formData.append("email", email);
+      formData.append("password", password);
+
       const response = await fetch("/login", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
+        body: formData,
       });
 
       if (response.ok) {
