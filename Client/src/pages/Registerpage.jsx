@@ -6,6 +6,8 @@ const Registerpage = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
+
 
   const navigate = useNavigate();
 
@@ -84,6 +86,8 @@ const Registerpage = () => {
                 setPassword(e.target.value);
               }}
             ></input>
+            {/* Register Error Message */}
+            {error && <div className="error-message">{error}</div>}
             <button className="login-btn btn-primary">Sign In</button>
           </form>
           <div className="register-text">
