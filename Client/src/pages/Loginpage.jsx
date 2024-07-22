@@ -21,7 +21,7 @@ const Loginpage = () => {
       formData.append("email", email);
       formData.append("password", password);
 
-      const response = await fetch("/login", {
+      const response = await fetch("http://localhost:8000/api/v1/login/", {
         method: "POST",
         body: formData,
       });
