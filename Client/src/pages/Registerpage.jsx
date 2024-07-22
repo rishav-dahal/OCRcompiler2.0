@@ -79,7 +79,7 @@ const Registerpage = () => {
             ></input>
             <input
               type="password"
-              id="username"
+              id="password"
               placeholder="Enter password"
               className="input-field"
               onChange={(e) => {
