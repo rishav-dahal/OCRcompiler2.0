@@ -1,23 +1,25 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
-from .models import User, Guest, CodeSnippet, OCRProcess
+from .models import *
 
 class UserAdmin(BaseUserAdmin):
     fieldsets = (
-        (None, {'fields': ('email', 'password')}),
-        ('Personal info', {'fields': ('first_name', 'last_name')}),
-        ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}),
-        ('Important dates', {'fields': ('last_login', 'date_joined')}),
+        ('User_credentials', {'fields': ('email', 'password')}),
+        ('Personal info', {'fields': ('name','username')}),
+        ('Permissions', {'fields': ('is_active', 'is_admin')}),
+        ('Important dates', {'fields': ('last_login',)}),
     )
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'password1', 'password2'),
+            'fields': ('email', 'name','username','password1','password2'),
         }),
     )
-    list_display = ('email', 'first_name', 'last_name', 'is_staff')
-    search_fields = ('email', 'first_name', 'last_name')
+    list_display = ('id','email','name', 'is_admin',)
+    list_filter = ('is_admin','is_active',)
+    search_fields = ('email', 'name','username',)
     ordering = ('email',)
+    filter_horizontal = ()
 
 # Register your models here
 admin.site.register(User, UserAdmin)

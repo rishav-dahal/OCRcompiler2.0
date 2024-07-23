@@ -1,6 +1,7 @@
 from rest_framework import serializers  
-from .models import OCRProcess, CodeSnippet, User
+from .models import *
 from .services.code_formatter import format_code
+from django.contrib.auth.password_validation import validate_password
 from django.db import transaction
 
 class CodeSnippetSerializer(serializers.ModelSerializer):
@@ -31,7 +32,6 @@ class OCRProcessSerializer(serializers.ModelSerializer):
                     formatted_code=formatted_code,
                     language=language
                 )
-                print("Rishav")
                 ocr_process = OCRProcess.objects.create(
                     snippet=snippet,
                     original_image=original_image_path,
@@ -45,7 +45,7 @@ class OCRProcessSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'email', 'created_at','first_name','last_name')
+        fields = ('id', 'email', 'created_at','name','username')
 
 
 class UserLoginSerializer(serializers.ModelSerializer):
@@ -53,3 +53,22 @@ class UserLoginSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ["email", "password"]
+
+class RegistrationSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = ('email', 'password', 'name', 'username')
+        extra_kwargs = {
+            'password': {'write_only': True}
+        }
+
+    def validate(self, attrs):
+        email = attrs.get('email', '')
+        if User.objects.filter(email=email).exists():
+            raise serializers.ValidationError({'email': 'Email is already in use'})
+
+        return super().validate(attrs)
+
+    def create(self, validated_data):
+        return User.objects.create(**validated_data)
