@@ -79,8 +79,8 @@ function App() {
         );
         console.log(response);
         console.log(response.data.snippet);
-        setData(response.data.snippet.text_content);
-        setCode(response.data.snippet.text_content);
+        setData(response.data.snippet.formatted_code);
+        setCode(response.data.snippet.formatted_code);
         // fetch("/ocr")
         //   .then((response) => response.json())
         //   .then((data) => {

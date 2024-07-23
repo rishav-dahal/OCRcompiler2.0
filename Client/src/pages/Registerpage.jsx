@@ -3,8 +3,8 @@ import "./Loginpage.css";
 import { useNavigate } from "react-router-dom";
 
 const Registerpage = () => {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+  const [name, setName] = useState("");
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
@@ -22,18 +22,19 @@ const Registerpage = () => {
       const formData = new FormData();
       formData.append("email", email);
       formData.append("password", password);
-      formData.append("first_name", firstName);
-      formData.append("last_name", lastName);
+      formData.append("name", name);
+      formData.append("username", username);
 
-      const response = await fetch("http://localhost:8000/api/v1/register/", {
+      const response = await fetch("http://localhost:8000/api/v1/signup/", {
         method: "POST",
         body: formData,
       });
 
       if (response.ok) {
         const data = await response.json();
-        localStorage.setItem("accessToken", data.token.accessToken);
-        localStorage.setItem("refreshToken", data.token.refreshToken);
+        console.log(data);
+        localStorage.setItem("accessToken", data.tokens.access);
+        localStorage.setItem("refreshToken", data.tokens.refresh);
         // Route to dashboard
         navigate("/login");
       } else {
@@ -62,20 +63,20 @@ const Registerpage = () => {
           <form className="input-form" onSubmit={handleSubmit}>
             <input
               type="text"
-              id="firstName"
-              placeholder="Enter first name"
+              id="Name"
+              placeholder="Enter name"
               className="input-field"
               onChange={(e) => {
-                setFirstName(e.target.value);
+                setName(e.target.value);
               }}
             ></input>
             <input
               type="text"
-              id="lastName"
-              placeholder="Enter last name"
+              id="username"
+              placeholder="Enter username"
               className="input-field"
               onChange={(e) => {
-                setLastName(e.target.value);
+                setUsername(e.target.value);
               }}
             ></input>
             <input

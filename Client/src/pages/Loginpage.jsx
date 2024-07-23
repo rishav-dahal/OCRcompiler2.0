@@ -25,14 +25,14 @@ const Loginpage = () => {
         method: "POST",
         body: formData,
       });
-
       if (response.ok) {
         const data = await response.json();
-        localStorage.setItem("accessToken", data.token.accessToken);
-        localStorage.setItem("refreshToken", data.token.refreshToken);
+        localStorage.setItem("accessToken", data.tokens.accessToken);
+        localStorage.setItem("refreshToken", data.tokens.refreshToken);
         // Route to dashboard
         navigate("/dashboard");
       } else {
+
         // Handle error response
         console.error("Login failed");
         const errorData = await response.json();
@@ -57,7 +57,7 @@ const Loginpage = () => {
           <div className="welcome-subtext">Login to access your dashbaord</div>
           <form className="input-form" onSubmit={handleSubmit}>
             <input
-              type="text"
+              type="email"
               id="email"
               placeholder="Enter email"
               className="input-field"
@@ -67,7 +67,7 @@ const Loginpage = () => {
             ></input>
             <input
               type="password"
-              id="username"
+              id="password"
               placeholder="Enter password"
               className="input-field"
               onChange={(e) => {
