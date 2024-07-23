@@ -148,23 +148,18 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    
 }
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=10),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
     "ROTATE_REFRESH_TOKENS": False,
     "BLACKLIST_AFTER_ROTATION": False,
     "UPDATE_LAST_LOGIN": False,
-
-    # "ALGORITHM": "HS256",
-    # "SIGNING_KEY": settings.SECRET_KEY,
-    # "VERIFYING_KEY": "",
-    # "AUDIENCE": None,
-    # "ISSUER": None,
-    # "JSON_ENCODER": None,
-    # "JWK_URL": None,
-    # "LEEWAY": 0,
 
     "AUTH_HEADER_TYPES": ("Bearer",),
     "AUTH_HEADER_NAME": "HTTP_AUTHORIZATION",
@@ -189,3 +184,9 @@ SIMPLE_JWT = {
     "SLIDING_TOKEN_OBTAIN_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainSlidingSerializer",
     "SLIDING_TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSlidingSerializer",
 }
+
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'  
+SESSION_COOKIE_NAME = 'sessionid'
+SESSION_COOKIE_AGE = 1800  # 30 minutes, in seconds
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+SESSION_SAVE_EVERY_REQUEST = False

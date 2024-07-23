@@ -12,14 +12,17 @@ class CodeSnippetSerializer(serializers.ModelSerializer):
 class OCRProcessSerializer(serializers.ModelSerializer):
     snippet = CodeSnippetSerializer(read_only=True)
     original_image = serializers.CharField(write_only=True)
-
+    user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), write_only=True ,allow_null=True)
+    guest = serializers.PrimaryKeyRelatedField(queryset=Guest.objects.all(), write_only=True, allow_null=True)
     class Meta:
         model = OCRProcess
-        fields = ['id', 'snippet', 'original_image', 'ocr_text', 'created_at']
+        fields = ['id', 'snippet', 'original_image', 'ocr_text', 'created_at','user','guest']
 
     def create(self, validated_data):
         original_image_path = validated_data.pop('original_image')
         ocr_text = validated_data.pop('ocr_text')
+        user = validated_data.pop('user', None)
+        guest = validated_data.pop('guest', None)
 
         formatted_code, language = format_code(ocr_text)
 
@@ -30,7 +33,9 @@ class OCRProcessSerializer(serializers.ModelSerializer):
             with transaction.atomic():
                 snippet = CodeSnippet.objects.create(
                     formatted_code=formatted_code,
-                    language=language
+                    language=language,
+                    user=user,
+                    guest=guest
                 )
                 ocr_process = OCRProcess.objects.create(
                     snippet=snippet,
@@ -43,9 +48,16 @@ class OCRProcessSerializer(serializers.ModelSerializer):
         return ocr_process
 
 class UserSerializer(serializers.ModelSerializer):
+    snippets = serializers.SerializerMethodField()
     class Meta:
         model = User
-        fields = ('id', 'email', 'created_at','name','username')
+        fields = ('id', 'email', 'created_at','name','username','snippets')
+    
+    def get_snippets(self, obj):
+        snippets = CodeSnippet.objects.filter(user=obj)
+        serializer = CodeSnippetSerializer(snippets, many=True)
+        return serializer.data
+    
 
 
 class UserLoginSerializer(serializers.ModelSerializer):

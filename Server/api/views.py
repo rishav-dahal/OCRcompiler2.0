@@ -12,6 +12,7 @@ from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 from .services.methods import allowed_file
 from .services.ocr import run_ocr
+from django.http import HttpResponse
 
 
 UPLOAD_FOLDER = "Images"
@@ -52,7 +53,8 @@ def signup(request):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def user_profile(request):
-    serializer = UserSerializer(request.user)
+    user = request.user
+    serializer = UserSerializer(user)
     return Response(serializer.data)
 
 
@@ -77,6 +79,18 @@ def upload_image(request):
             'original_image': path,
             'ocr_text': ocr_text
         }
+        
+        if request.user.is_authenticated:
+            user = request.user
+            data['user'] = user.id
+            data['guest'] = None
+        else:
+            if not request.session.session_key:
+                request.session.create()
+            guest, created = Guest.objects.get_or_create(session_id=request.session.session_key)
+            data['guest'] = guest.id
+            data['user'] = None
+
         serializer = OCRProcessSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
@@ -85,3 +99,18 @@ def upload_image(request):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
     return Response({'msg': 'Image upload failed. Invalid file format.'}, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def download_snippet(request, snippet_id):
+    snippet = CodeSnippet.objects.get(id=snippet_id, user=request.user)
+    file_extension = {
+        'python': 'py',
+        'java': 'java',
+        'cpp': 'cpp',
+        'c': 'c'
+    }.get(snippet.language, 'txt')
+    
+    response = HttpResponse(snippet.formatted_code, content_type='text/plain')
+    response['Content-Disposition'] = f'attachment; filename=snippet_{snippet.id}.{file_extension}'
+    return response
