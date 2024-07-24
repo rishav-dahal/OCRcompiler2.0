@@ -7,6 +7,7 @@ import ErrorModal from "../section/ErrorModal";
 import axios from "axios";
 import Tesseract from "tesseract.js";
 import { HiDownload } from "react-icons/hi";
+import { useNavigate } from "react-router-dom";
 
 function App() {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -20,6 +21,12 @@ function App() {
   const [windowSize, setWindowSize] = useState();
   const [progressBar, setProgressBar] = useState(0);
   const [extension, setExtension] = useState("code.txt");
+  const navigate = useNavigate();
+
+  //handle logo click
+  const handleLogoClick = () => {
+    navigate("/dashboard");
+  };
 
   //Downloads the code as a txt file
   const downloadTxtFile = () => {
@@ -162,7 +169,7 @@ function App() {
 
         {/* {data.ocr} */}
         <div className="navbar">
-          <div className="logo">
+          <div className="logo" onClick={handleLogoClick}>
             <span className="primary-color">OCR</span>compiler
           </div>
           <div className="save-btn btn-primary" onClick={downloadTxtFile}>

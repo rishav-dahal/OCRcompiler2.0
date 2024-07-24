@@ -2,14 +2,36 @@ import React, { useEffect, useState } from "react";
 import "../App.css";
 import "./Dashboard.css";
 import SnippetItem from "../components/SnippetItem";
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
   const [documents, setDocuments] = useState([]);
+  const navigate = useNavigate();
+
+  const handleButtonClick = () => {
+    navigate("/home");
+  };
 
   useEffect(() => {
-    fetch("http://localhost:8000/api/v1/login/")
-      .then((response) => response.json())
-      .then((data) => setDocuments(data))
+    const token = localStorage.getItem("accessToken"); // Retrieve JWT token from localStorage
+
+    fetch("http://localhost:8000/api/v1/profile/", {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`, // Include the JWT token in the Authorization header
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw new Error("Network response was not ok.");
+      })
+      .then((data) => {
+        console.log(data); // Check the response structure
+        setDocuments(data.data || []); // Adjust according to the actual structure
+      })
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
 
@@ -20,7 +42,9 @@ const Dashboard = () => {
         <div className="logo">
           <span className="primary-color">OCR</span>compiler
         </div>
-        <div className="save-btn btn-primary">Create a new Document</div>
+        <div className="save-btn btn-primary" onClick={handleButtonClick}>
+          Create a new Document
+        </div>
         <div className="user-img"></div>
       </div>
 
@@ -29,23 +53,33 @@ const Dashboard = () => {
         <div className="template-header">Start with a template</div>
         <div className="template-items">
           <div className="template-item">
-            <div className="template-rect"></div>
+            <div className="template-rect">
+              <div className="template-rect-text">Py</div>
+            </div>
             <div className="template-info">Python Document</div>
           </div>
           <div className="template-item">
-            <div className="template-rect"></div>
+            <div className="template-rect">
+              <div className="template-rect-text">JS</div>
+            </div>
             <div className="template-info">Javascript Document</div>
           </div>
           <div className="template-item">
-            <div className="template-rect"></div>
+            <div className="template-rect">
+              <div className="template-rect-text">C</div>
+            </div>
             <div className="template-info">C Document</div>
           </div>
           <div className="template-item">
-            <div className="template-rect"></div>
+            <div className="template-rect">
+              <div className="template-rect-text">C++</div>
+            </div>
             <div className="template-info">C++ Document</div>
           </div>
           <div className="template-item">
-            <div className="template-rect"></div>
+            <div className="template-rect">
+              <div className="template-rect-text">text</div>
+            </div>
             <div className="template-info">General Document</div>
           </div>
         </div>
