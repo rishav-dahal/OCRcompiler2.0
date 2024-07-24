@@ -1,0 +1,38 @@
+.template-wrapper {
+  margin-top: 20px;
+  color: white;
+}
+.template-header {
+  font-size: 20px;
+}
+.template-items {
+  display: grid;
+  grid-template-columns: repeat(5,1fr);
+  gap: 40px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 25px;
+}
+.template-item {
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+}
+.template-rect {
+  border-radius: 3px;
+  height: 250px;
+  width: 210px;
+  background-color: gray;
+  cursor: pointer;
+}
+.template-info {
+  font-size: 14px;
+}
+.hr-line{
+    margin: 30px 0px;
+    border: 1px solid var(--grey);
+}
+.recent-docs-wrapper {
+  margin-top: 50px;
+  color: white;
+}
