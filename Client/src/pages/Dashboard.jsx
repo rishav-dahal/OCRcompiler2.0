@@ -1,6 +1,7 @@
 import React from "react";
 import "../App.css";
 import "./Dashboard.css";
+import SnippetItem from "../components/SnippetItem";
 
 const Dashboard = () => {
   return (
@@ -47,10 +48,7 @@ const Dashboard = () => {
       <div className="recent-docs-wrapper">
         <div className="template-header">Recent documents</div>
         <div className="template-items">
-          <div className="template-item">
-            <div className="template-rect"></div>
-            <div className="template-info">My document 1</div>
-          </div>
+          <SnippetItem thumbnail="C" title="My document" date="2024-02-12" />
           <div className="template-item">
             <div className="template-rect"></div>
             <div className="template-info">My document 1</div>
