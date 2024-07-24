@@ -92,14 +92,17 @@ const Dashboard = () => {
       <div className="recent-docs-wrapper">
         <div className="template-header">Recent documents</div>
         <div className="template-items">
-          {documents.map((item) => (
+          {/* {documents.map((item) => (
             <SnippetItem
               key={item.snippets.id}
               thumbnail={item.snippets.language}
               title={item.snippets.id}
               date={item.snippets.created_at}
             />
-          ))}
+          ))} */}
+          <SnippetItem thumbnail="C" title="1" date="2024-12-2" />
+          <SnippetItem thumbnail="C++" title="2" date="2024-12-2" />
+          <SnippetItem thumbnail="Py" title="3" date="2024-12-24 " />
         </div>
       </div>
     </div>
