@@ -12,6 +12,7 @@ const Dashboard = () => {
       .then((data) => setDocuments(data))
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
+
   return (
     <div className="App">
       {/* Navbar */}
@@ -58,10 +59,10 @@ const Dashboard = () => {
         <div className="template-items">
           {documents.map((item) => (
             <SnippetItem
-              key={item.id}
-              thumbnail={item.language}
-              title={item.id}
-              date={item.created_at}
+              key={item.snippets.id}
+              thumbnail={item.snippets.language}
+              title={item.snippets.id}
+              date={item.snippets.created_at}
             />
           ))}
         </div>
