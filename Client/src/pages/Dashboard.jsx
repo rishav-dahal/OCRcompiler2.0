@@ -5,7 +5,7 @@ import SnippetItem from "../components/SnippetItem";
 import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
-  const [documents, setDocuments] = useState([]);
+  const [documents, setDocuments] = useState({});
   const navigate = useNavigate();
 
   const handleButtonClick = () => {
@@ -13,8 +13,8 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
-    const token = localStorage.getItem("accessToken"); // Retrieve JWT token from localStorage
-
+    const token = localStorage.getItem("access"); // Retrieve JWT token from localStorage
+    // console.log(token); // Check the token value
     fetch("http://localhost:8000/api/v1/profile/", {
       method: "GET",
       headers: {
@@ -29,8 +29,9 @@ const Dashboard = () => {
         throw new Error("Network response was not ok.");
       })
       .then((data) => {
-        console.log(data); // Check the response structure
-        setDocuments(data.data || []); // Adjust according to the actual structure
+        // console.log(data); // Check the response structure
+        setDocuments(data || []); // Adjust according to the actual structure
+        console.log(documents); // Check the updated state value
       })
       .catch((error) => console.error("Error fetching data:", error));
   }, []);

@@ -27,8 +27,8 @@ const Loginpage = () => {
       });
       if (response.ok) {
         const data = await response.json();
-        localStorage.setItem("accessToken", data.tokens.accessToken);
-        localStorage.setItem("refreshToken", data.tokens.refreshToken);
+        localStorage.setItem("access", data.tokens.access);
+        localStorage.setItem("refresh", data.tokens.refresh);
         // Route to dashboard
         navigate("/dashboard");
       } else {
