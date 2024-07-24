@@ -9,7 +9,7 @@ const SnippetItem = ({ thumbnail, title, date }) => {
           <div className="template-rect-text">{thumbnail}</div>
         </div>
         <div className="template-info">
-          <div className="template-info-title">{title}</div>
+          <div className="template-info-title">Document no: {title}</div>
           <div className="template-info-date"> Created On : {date}</div>
         </div>
       </div>

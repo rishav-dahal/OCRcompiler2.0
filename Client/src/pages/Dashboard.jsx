@@ -1,9 +1,17 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../App.css";
 import "./Dashboard.css";
 import SnippetItem from "../components/SnippetItem";
 
 const Dashboard = () => {
+  const [documents, setDocuments] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:8000/api/v1/login/")
+      .then((response) => response.json())
+      .then((data) => setDocuments(data))
+      .catch((error) => console.error("Error fetching data:", error));
+  }, []);
   return (
     <div className="App">
       {/* Navbar */}
@@ -48,23 +56,14 @@ const Dashboard = () => {
       <div className="recent-docs-wrapper">
         <div className="template-header">Recent documents</div>
         <div className="template-items">
-          <SnippetItem thumbnail="C" title="My document" date="2024-02-12" />
-          <div className="template-item">
-            <div className="template-rect"></div>
-            <div className="template-info">My document 1</div>
-          </div>
-          <div className="template-item">
-            <div className="template-rect"></div>
-            <div className="template-info">My document 1</div>
-          </div>
-          <div className="template-item">
-            <div className="template-rect"></div>
-            <div className="template-info">My document 1</div>
-          </div>
-          <div className="template-item">
-            <div className="template-rect"></div>
-            <div className="template-info">My document 1</div>
-          </div>
+          {documents.map((item) => (
+            <SnippetItem
+              key={item.id}
+              thumbnail={item.language}
+              title={item.id}
+              date={item.created_at}
+            />
+          ))}
         </div>
       </div>
     </div>
