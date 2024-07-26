@@ -71,3 +71,13 @@
   margin-top: 50px;
   color: white;
 }
+
+/* For Delete Button in snippet item*/
+.delete-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: red;
+  z-index: 99;
+  font-size: 28px;
+}
