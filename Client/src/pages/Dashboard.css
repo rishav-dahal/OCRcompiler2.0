@@ -37,7 +37,7 @@
   right: 0;
   bottom: 0;
   border-radius: 3px;
-  background: url("../../images/codebg.png");
+  background: url("../images/codebg.png");
   background-size: cover;
   background-position: center;
   filter: blur(3px);
