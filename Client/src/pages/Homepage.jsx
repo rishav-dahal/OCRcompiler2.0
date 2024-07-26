@@ -85,6 +85,7 @@ function App() {
         setProgressBar(m.progress);
       },
     });
+    
     // Check if the OCR output contains a substantial amount of text
     const minTextLength = 5;
 

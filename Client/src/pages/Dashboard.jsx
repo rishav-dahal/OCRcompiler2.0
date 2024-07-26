@@ -20,6 +20,24 @@ const Dashboard = () => {
     navigate("/home", { state: { code: formattedCode, language: language } });
   };
 
+  // Delete the Snippet
+  const handleSnippetDelete = async (id) => {
+    const url = `http://localhost:8000/api/v1/code_snippet/${id}/delete/`;
+    try {
+      const response = await fetch(url, {
+        method: "DELETE",
+      });
+
+      if (response.ok) {
+        console.log(`Item ${itemId} deleted successfully.`);
+      } else {
+        console.error(`Failed to delete item ${itemId}.`);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
   useEffect(() => {
     setTemplateDocuments(templateSnippetsData.snippets);
   });
@@ -75,7 +93,9 @@ const Dashboard = () => {
             <TemplateSnippetItem
               key={item.id}
               thumbnail={item.language}
-              handleItemClick={() => handleItemClick(item.formatted_code, item.language)} // Pass formatted_code on item click
+              handleItemClick={() =>
+                handleItemClick(item.formatted_code, item.language)
+              } // Pass formatted_code on item click
             />
           ))}
         </div>
@@ -94,6 +114,7 @@ const Dashboard = () => {
               title={item.id}
               date={item.created_at}
               handleItemClick={() => handleItemClick(item.formatted_code)} // Pass formatted_code on item click
+              handleSnippetDelete={handleSnippetDelete(item.id)} //Delete the file
             />
           ))}
         </div>

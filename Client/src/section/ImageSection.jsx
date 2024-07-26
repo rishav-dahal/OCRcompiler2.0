@@ -20,7 +20,7 @@ function imageInput({
       </div>
       <form action="" className="image-input">
         <div className="image-input-hero">
-          {selectedImage ? (
+          {selectedImage ? (  
             <div>
               <div className="image-display">
                 <img
@@ -39,7 +39,7 @@ function imageInput({
               <p>Click to Upload</p>
             </div>
           )}
-          {selectedImage && (
+          {selectedImage && (    
             <div className="btn-section">
               <div className="progress-wrapper">
                 <div
