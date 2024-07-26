@@ -29,9 +29,9 @@ const Dashboard = () => {
       });
 
       if (response.ok) {
-        console.log(`Item ${itemId} deleted successfully.`);
+        console.log(`Item ${id} deleted successfully.`);
       } else {
-        console.error(`Failed to delete item ${itemId}.`);
+        console.error(`Failed to delete item ${id}.`);
       }
     } catch (error) {
       console.error("Error:", error);
