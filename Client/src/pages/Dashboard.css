@@ -54,10 +54,12 @@
   margin-top: 10px;
   display: flex;
   gap: 5px;
-  flex-direction: column;
+  /* flex-direction: column; */
+  justify-content: space-between;
 }
 .template-info-title {
   font-size: 14px;
+  display: inline-block;
 }
 .template-info-date {
   font-size: 14px;
@@ -72,12 +74,7 @@
   color: white;
 }
 
-/* For Delete Button in snippet item*/
 .delete-btn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
   color: red;
-  z-index: 99;
   font-size: 28px;
 }
