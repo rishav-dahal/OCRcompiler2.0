@@ -117,8 +117,7 @@ function App() {
         //   .then((data) => {
         //     setData(data);
         //     setCode(data.ocr);
-        //     console.log(code);
-        //   });
+        //     console.log(code);d
         //Handles the response from the backend if needed
       } catch (error) {
         console.error("Error uploading image:", error);
@@ -161,7 +160,7 @@ function App() {
         input,
         language,
       };
-      const outputData = await axios.post("http://localhost:4999/py", payload);
+      const outputData = await axios.post("http://localhost:8000/api/v1/compile/", payload);
       console.log("OUTPUTDATA:", outputData.data);
       if (outputData.data.error) {
         setOutput(outputData.data.error);
