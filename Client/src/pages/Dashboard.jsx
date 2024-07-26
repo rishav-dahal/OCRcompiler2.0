@@ -22,11 +22,17 @@ const Dashboard = () => {
 
   // Delete the Snippet
   const handleSnippetDelete = async (id) => {
-    // console.log("handle snippet delete: ", id.target.id);
+    // Authenticaton token
+    const token = localStorage.getItem("access");
+
     const url = `http://localhost:8000/api/v1/code_snippet/${id}/delete/`;
     try {
       const response = await fetch(url, {
         method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`, // Include the JWT token in the Authorization header
+          "Content-Type": "application/json",
+        },
       });
 
       if (response.ok) {
