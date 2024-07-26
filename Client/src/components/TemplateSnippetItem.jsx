@@ -7,6 +7,7 @@ const TemplateSnippetItem = ({ thumbnail, handleItemClick }) => {
       <div className="template-item" onClick={handleItemClick}>
         <div className="template-rect">
           <div className="template-rect-text">{thumbnail}</div>
+          
         </div>
         <div className="template-info">
           <div className="template-info-title">{thumbnail} document</div>

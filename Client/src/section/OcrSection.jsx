@@ -14,6 +14,7 @@ function OcrSection({
   language,
 }) {
   const [codelanguage, setCodeLanguage] = useState("");
+
   useEffect(() => {
     console.log("Language prop received:", language); // Debugging line
     if (language) {
@@ -38,11 +39,11 @@ function OcrSection({
             defaultValue={codelanguage}
             value={codelanguage}
           >
-            <option value="Js">Javascript</option>
-            <option value="Java">Java</option>
-            <option value="C++">C++</option>
-            <option value="C">C</option>
-            <option value="Python">Python</option>
+            <option value="javascript">Javascript</option>
+            <option value="java">Java</option>
+            <option value="cpp">C++</option>
+            <option value="c">C</option>
+            <option value="python">Python</option>
           </select>
         </div>
       </div>

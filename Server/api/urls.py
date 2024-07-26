@@ -11,6 +11,7 @@ urlpatterns = [
     path('login/', login, name='login'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('profile/', user_profile, name='profile'),
-    path('download/<int:snippet_id>/', download_snippet, name='download_snippet'),
+    path('code_snippet/<int:snippet_id>/', download_snippet, name='download_snippet'),
+    path('code_snippet/<int:pk>/delete/', delete_code_snippet, name='code_snippet_delete'),
     path('compile/', compiler_service, name='compiler_Service'),
 ]
