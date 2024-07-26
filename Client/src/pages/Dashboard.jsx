@@ -37,6 +37,7 @@ const Dashboard = () => {
 
       if (response.ok) {
         console.log(`Item ${id} deleted successfully.`);
+        setDocuments(documents.filter((document) => document.id !== id));
       } else {
         console.error(`Failed to delete item ${id}.`);
       }
