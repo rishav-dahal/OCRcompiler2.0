@@ -13,6 +13,7 @@ from django.core.files.base import ContentFile
 from .services.methods import allowed_file
 from .services.ocr import run_ocr
 from django.http import HttpResponse
+from .services.compiler import compile_code
 
 
 UPLOAD_FOLDER = "Images"
@@ -51,7 +52,7 @@ def signup(request):
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
+@permission_classes([AllowAny])
 def user_profile(request):
     user = request.user
     serializer = UserSerializer(user)
@@ -114,3 +115,9 @@ def download_snippet(request, snippet_id):
     response = HttpResponse(snippet.formatted_code, content_type='text/plain')
     response['Content-Disposition'] = f'attachment; filename=snippet_{snippet.id}.{file_extension}'
     return response
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def compiler_service(request):
+    output = compile_code(request)
+    return output

@@ -12,4 +12,5 @@ urlpatterns = [
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('profile/', user_profile, name='profile'),
     path('download/<int:snippet_id>/', download_snippet, name='download_snippet'),
+    path('compile/', compiler_service, name='compiler_Service'),
 ]
