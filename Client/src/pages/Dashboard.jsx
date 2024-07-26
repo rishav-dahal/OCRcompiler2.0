@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "../App.css";
 import "./Dashboard.css";
+import axios from "axios"; 
 import SnippetItem from "../components/SnippetItem";
 import { useNavigate } from "react-router-dom";
 import templateSnippetsData from "../data/templateSnippetsData.json";
