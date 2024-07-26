@@ -61,7 +61,7 @@ const Dashboard = () => {
       }
     }
 
-    localStorage.removeItem("acess");
+    localStorage.removeItem("access");
     localStorage.removeItem("refresh");
     localStorage.removeItem("user");
 
