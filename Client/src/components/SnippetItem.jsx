@@ -12,10 +12,8 @@ const SnippetItem = ({
   return (
     <div>
       <div className="template-item">
-        <div className="template-rect">
-          <div className="template-rect-text" onClick={handleItemClick}>
-            {thumbnail}
-          </div>
+        <div className="template-rect" onClick={handleItemClick}>
+          <div className="template-rect-text">{thumbnail}</div>
           <div className="delete-btn" onClick={handleSnippetDelete}>
             <MdDeleteOutline />
           </div>
