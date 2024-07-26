@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef , useEffect} from "react";
 import "../App.css";
 import ImageSection from "../section/ImageSection.jsx";
 import OcrSection from "../section/OcrSection";
@@ -8,6 +8,7 @@ import axios from "axios";
 import Tesseract from "tesseract.js";
 import { HiDownload } from "react-icons/hi";
 import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 function App() {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -27,6 +28,14 @@ function App() {
   const handleLogoClick = () => {
     navigate("/dashboard");
   };
+
+  // Get code from SnippetItem
+  const location = useLocation();
+  useEffect(() => {
+    if (location.state && location.state.code) {
+      setCode(location.state.code);
+    }
+  }, [location.state]);
 
   //Downloads the code as a txt file
   const downloadTxtFile = () => {
@@ -80,9 +89,16 @@ function App() {
       formData.append("image", selectedImage);
 
       try {
+        const accessToken = localStorage.getItem("access"); // Retrieve JWT token from localStorage
         const response = await axios.post(
           "http://localhost:8000/api/v1/upload/",
-          formData
+          formData,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`, // Include the JWT token in the Authorization header
+              "Content-Type": "multipart/form-data",
+            },
+          }
         );
         console.log(response);
         console.log(response.data.snippet);
@@ -169,8 +185,10 @@ function App() {
 
         {/* {data.ocr} */}
         <div className="navbar">
-          <div className="logo" onClick={handleLogoClick}>
+          <div className="logo">
+            <div className="" onClick={handleLogoClick} >
             <span className="primary-color">OCR</span>compiler
+            </div>
           </div>
           <div className="save-btn btn-primary" onClick={downloadTxtFile}>
             {windowSize <= 580 ? (

@@ -1,10 +1,10 @@
 import React from "react";
 import "../pages/Dashboard.css";
 
-const SnippetItem = ({ thumbnail, title, date }) => {
+const SnippetItem = ({ thumbnail, title, date , handleItemClick }) => {
   return (
     <div>
-      <div className="template-item">
+      <div className="template-item" onClick={handleItemClick}>
         <div className="template-rect">
           <div className="template-rect-text">{thumbnail}</div>
         </div>

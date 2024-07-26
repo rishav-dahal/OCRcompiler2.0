@@ -47,7 +47,7 @@
   position: relative; /* Keeps it above the blurred background */
   z-index: 2;
   color: white;
-  font-size: 62px;
+  font-size: 38px;
   font-weight: 700;
 }
 .template-info {

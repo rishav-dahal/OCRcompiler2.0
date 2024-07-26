@@ -3,13 +3,19 @@ import "../App.css";
 import "./Dashboard.css";
 import SnippetItem from "../components/SnippetItem";
 import { useNavigate } from "react-router-dom";
+import Homepage from "./Homepage";
 
 const Dashboard = () => {
-  const [documents, setDocuments] = useState({});
+  const [documents, setDocuments] = useState([]);
   const navigate = useNavigate();
 
   const handleButtonClick = () => {
     navigate("/home");
+  };
+
+  // Handle snippet item click
+  const handleItemClick = (formattedCode) => {
+    navigate("/home", { state: { code: formattedCode } });
   };
 
   useEffect(() => {
@@ -29,12 +35,19 @@ const Dashboard = () => {
         throw new Error("Network response was not ok.");
       })
       .then((data) => {
-        // console.log(data); // Check the response structure
-        setDocuments(data || []); // Adjust according to the actual structure
-        console.log(documents); // Check the updated state value
+        console.log(data); // Check the response structure
+        setDocuments(data.snippets);
+        // setDocuments(data || []); // Adjust according to the actual structure
+        // console.log(documents); // Check the updated state value
       })
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
+
+  // Logging outside useEffect to observe state updates
+useEffect(() => {
+  console.log(documents); // Check the updated state value
+}, [documents]); 
+
 
   return (
     <div className="App">
@@ -92,17 +105,15 @@ const Dashboard = () => {
       <div className="recent-docs-wrapper">
         <div className="template-header">Recent documents</div>
         <div className="template-items">
-          {/* {documents.map((item) => (
+          {documents.map((item) => (
             <SnippetItem
-              key={item.snippets.id}
-              thumbnail={item.snippets.language}
-              title={item.snippets.id}
-              date={item.snippets.created_at}
+              key={item.id}
+              thumbnail={item.language}
+              title={item.id}
+              date={item.created_at}
+              handleItemClick={() => handleItemClick(item.formatted_code)} // Pass formatted_code on item click
             />
-          ))} */}
-          <SnippetItem thumbnail="C" title="1" date="2024-12-2" />
-          <SnippetItem thumbnail="C++" title="2" date="2024-12-2" />
-          <SnippetItem thumbnail="Py" title="3" date="2024-12-24 " />
+          ))}
         </div>
       </div>
     </div>
