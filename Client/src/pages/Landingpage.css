@@ -38,7 +38,7 @@
 }
 .landing-img {
   border: 2px solid var(--grey);
-  border-radius: 5px;
+  border-radius: 15px;
   margin-top: 50px;
   position: relative;
 }
@@ -59,7 +59,6 @@
   position: absolute;
   padding: 50px 40px;
   border-top: 1px solid var(--grey);
-  border-radius: 5px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -67,20 +66,20 @@
   bottom: 10px;
   background-color: var(--dark);
 }
-.feature{
+.feature {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
-.feature-icon{
+.feature-icon {
   font-size: 48px;
   color: var(--green-lighter);
 }
-.feature-description{
+.feature-description {
   font-size: 24px;
   text-align: center;
 }
-.right-arrow-icon{
+.right-arrow-icon {
   font-size: 44px;
 }

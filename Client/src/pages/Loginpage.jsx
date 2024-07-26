@@ -13,6 +13,10 @@ const Loginpage = () => {
     navigate("/register");
   }
 
+  // handle guest login
+  function handleGuestLogin() {
+    navigate("/dashboard");
+  }
   // Handle Login Button Click
   async function handleSubmit(event) {
     event.preventDefault();
@@ -32,7 +36,6 @@ const Loginpage = () => {
         // Route to dashboard
         navigate("/dashboard");
       } else {
-
         // Handle error responses
         console.error("Login failed");
         const errorData = await response.json();
@@ -45,9 +48,7 @@ const Loginpage = () => {
   }
   return (
     <div className="login-container">
-      <div className="left-panel">
-        
-      </div>
+      <div className="left-panel"></div>
       <div className="right-panel">
         <div className="right-panel-wrapper">
           <div className="logo login-logo">
@@ -78,7 +79,15 @@ const Loginpage = () => {
             ></input>
             {/* Login Error Messages */}
             {error && <div className="error-message">{error}</div>}
-            <button className="login-btn btn-primary">Log In</button>
+            <div className="buttons">
+              <button className="login-btn btn-primary">Log In</button>
+              <button
+                className="login-btn guest-btn btn-secondary"
+                onClick={handleGuestLogin}
+              >
+                Login as a guest
+              </button>
+            </div>
           </form>
 
           <div className="register-text">

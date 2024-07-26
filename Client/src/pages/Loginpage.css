@@ -59,6 +59,10 @@
   border: none;
   border-bottom: 2px solid var(--green);
 }
+.buttons{
+  display: flex;
+  gap: 20px;
+}
 .login-btn {
   border: none;
   font-weight: 600;
@@ -66,6 +70,9 @@
   padding: 10px 25px;
   font-size: 16px;
   margin-top: 20px;
+}
+.guest-btn{
+  width: auto;
 }
 .register-text {
   margin-top: 15px;
