@@ -14,10 +14,11 @@ function OcrSection({
   language,
 }) {
   const [codelanguage, setCodeLanguage] = useState("");
+
   useEffect(() => {
     console.log("Language prop received:", language); // Debugging line
     if (language) {
-      setCodeLanguage(language);
+      setCodeLanguage(language.toUpperCase());
     }
   }, [language]);
 

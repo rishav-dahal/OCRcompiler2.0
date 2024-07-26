@@ -112,6 +112,9 @@ function App() {
         if (response.data.snippet.language) {
           setLanguage(response.data.snippet.language);
         }
+        else{
+          setLanguage("");
+        }
         // fetch("/ocr")
         //   .then((response) => response.json())
         //   .then((data) => {
