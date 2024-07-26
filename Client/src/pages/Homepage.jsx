@@ -94,15 +94,16 @@ function App() {
 
       try {
         const accessToken = localStorage.getItem("access"); // Retrieve JWT token from localStorage
+        const headers = {
+          "Content-Type": "multipart/form-data",
+        };
+        if (accessToken) {
+          headers.Authorization = `Bearer ${accessToken}`;
+        }
         const response = await axios.post(
           "http://localhost:8000/api/v1/upload/",
           formData,
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`, // Include the JWT token in the Authorization header
-              "Content-Type": "multipart/form-data",
-            },
-          }
+          {headers}
         );
         console.log(response);
         console.log(response.data.snippet);
