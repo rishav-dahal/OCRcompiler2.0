@@ -52,7 +52,7 @@ function OcrSection({
           className="monaco-wrapper"
           height="90vh"
           // defaultLanguage={language}
-          language={codelanguage || language}
+          language={codelanguage.toLowerCase()}
           defaultValue=""
           theme="vs-dark"
           options={editorOptions}
