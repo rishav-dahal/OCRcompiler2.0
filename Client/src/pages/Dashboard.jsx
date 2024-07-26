@@ -22,20 +22,21 @@ const Dashboard = () => {
 
   // Delete the Snippet
   const handleSnippetDelete = async (id) => {
-    const url = `http://localhost:8000/api/v1/code_snippet/${id}/delete/`;
-    try {
-      const response = await fetch(url, {
-        method: "DELETE",
-      });
+    console.log("handle snippet delete: ", id);
+    // const url = `http://localhost:8000/api/v1/code_snippet/${id}/delete/`;
+    // try {
+    //   const response = await fetch(url, {
+    //     method: "DELETE",
+    //   });
 
-      if (response.ok) {
-        console.log(`Item ${id} deleted successfully.`);
-      } else {
-        console.error(`Failed to delete item ${id}.`);
-      }
-    } catch (error) {
-      console.error("Error:", error);
-    }
+    //   if (response.ok) {
+    //     console.log(`Item ${id} deleted successfully.`);
+    //   } else {
+    //     console.error(`Failed to delete item ${id}.`);
+    //   }
+    // } catch (error) {
+    //   console.error("Error:", error);
+    // }
   };
 
   useEffect(() => {
@@ -114,7 +115,7 @@ const Dashboard = () => {
               title={item.id}
               date={item.created_at}
               handleItemClick={() => handleItemClick(item.formatted_code)} // Pass formatted_code on item click
-              handleSnippetDelete={handleSnippetDelete(item.id)} //Delete the file
+              handleSnippetDelete={(e) => handleSnippetDelete(e)} //Delete the file
             />
           ))}
         </div>
