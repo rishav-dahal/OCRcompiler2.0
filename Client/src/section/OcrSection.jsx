@@ -14,7 +14,6 @@ function OcrSection({
   language,
 }) {
   const [codelanguage, setCodeLanguage] = useState("");
-
   useEffect(() => {
     console.log("Language prop received:", language); // Debugging line
     if (language) {
@@ -26,7 +25,6 @@ function OcrSection({
     setCodeLanguage(e.target.value);
     updateExtension(e.target.value);
   };
-
   return (
     <div className="ocr-section">
       <div className="section-title">
@@ -35,11 +33,16 @@ function OcrSection({
           OCR
         </div>
         <div className="dropdown">
-          <select onChange={onLanguageChange} value={"guysd"}>
-            <option value="js">Javascript</option>
-            <option value="cpp">C++</option>
-            <option value="c">C</option>
-            <option value="py">Python</option>
+          <select
+            onChange={onLanguageChange}
+            defaultValue={codelanguage}
+            value={codelanguage}
+          >
+            <option value="Js">Javascript</option>
+            <option value="Java">Java</option>
+            <option value="C++">C++</option>
+            <option value="C">C</option>
+            <option value="Python">Python</option>
           </select>
         </div>
       </div>
