@@ -108,6 +108,9 @@ function App() {
         console.log(response.data.snippet);
         setData(response.data.snippet.formatted_code);
         setCode(response.data.snippet.formatted_code);
+        if (response.data.snippet.language) {
+          setLanguage(response.data.snippet.language);
+        }
         // fetch("/ocr")
         //   .then((response) => response.json())
         //   .then((data) => {
@@ -155,6 +158,7 @@ function App() {
       const payload = {
         code,
         input,
+        language,
       };
       const outputData = await axios.post("http://localhost:4999/py", payload);
       console.log("OUTPUTDATA:", outputData.data);
