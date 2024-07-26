@@ -61,8 +61,8 @@ const Dashboard = () => {
       }
     }
 
-    localStorage.removeItem("token");
-    localStorage.removeItem("refresh_token");
+    localStorage.removeItem("acess");
+    localStorage.removeItem("refresh");
     localStorage.removeItem("user");
 
     navigate("/");
