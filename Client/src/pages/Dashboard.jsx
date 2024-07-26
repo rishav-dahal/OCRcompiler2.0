@@ -46,6 +46,27 @@ const Dashboard = () => {
     }
   };
 
+  // handle logout logic
+  const handleLogout = async () => {
+    const refreshToken = localStorage.getItem("refresh");
+
+    if (refreshToken) {
+      try {
+        await axios.post("http://localhost:8000/api/v1/logout/", {
+          refresh_token: refreshToken,
+        });
+      } catch (error) {
+        console.error("Logout failed", error);
+      }
+    }
+
+    localStorage.removeItem("token");
+    localStorage.removeItem("refresh_token");
+    localStorage.removeItem("user");
+
+    navigate("/");
+  };
+
   useEffect(() => {
     setTemplateDocuments(templateSnippetsData.snippets);
   });
@@ -91,7 +112,9 @@ const Dashboard = () => {
           Create a new Document
         </div>
         {localStorage.getItem("access") !== null && (
-          <div className="btn-secondary logout-btn">Log out</div>
+          <div className="btn-secondary logout-btn" onClick={handleLogout}>
+            Log out
+          </div>
         )}
       </div>
 
