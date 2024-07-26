@@ -7,7 +7,7 @@ from django.db import transaction
 class CodeSnippetSerializer(serializers.ModelSerializer):
     class Meta:
         model = CodeSnippet
-        fields = ['id','formatted_code', 'language', 'created_at']
+        fields = ['id','formatted_code', 'language', 'created_at', 'user', 'guest']
 
 class OCRProcessSerializer(serializers.ModelSerializer):
     snippet = CodeSnippetSerializer(read_only=True)
@@ -16,7 +16,7 @@ class OCRProcessSerializer(serializers.ModelSerializer):
     guest = serializers.PrimaryKeyRelatedField(queryset=Guest.objects.all(), write_only=True, allow_null=True)
     class Meta:
         model = OCRProcess
-        fields = ['id', 'snippet', 'original_image', 'ocr_text', 'created_at','user','guest']
+        fields = ['id', 'snippet', 'original_image', 'ocr_text', 'created_at', 'user', 'guest']
 
     def create(self, validated_data):
         original_image_path = validated_data.pop('original_image')

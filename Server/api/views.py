@@ -14,6 +14,7 @@ from .services.methods import allowed_file
 from .services.ocr import run_ocr
 from django.http import HttpResponse
 from .services.compiler import compile_code
+from .permissions import IsSnippetOwner
 
 
 UPLOAD_FOLDER = "Images"
@@ -121,3 +122,18 @@ def download_snippet(request, snippet_id):
 def compiler_service(request):
     output = compile_code(request)
     return output
+
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated,IsSnippetOwner])
+def delete_code_snippet(request, pk):
+    try:
+        snippet = CodeSnippet.objects.get(pk=pk)
+    except CodeSnippet.DoesNotExist:
+        return Response({'msg': 'Code snippet does not exist'}, status=status.HTTP_404_NOT_FOUND)
+
+    permission = IsSnippetOwner()
+    if not permission.has_object_permission(request, None, snippet):
+        return Response({'msg': 'You do not have permission to delete this snippet'}, status=status.HTTP_403_FORBIDDEN)
+    
+    snippet.delete()
+    return Response({'msg':'Successfully deleted '},status=status.HTTP_200_OK)
