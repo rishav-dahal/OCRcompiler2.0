@@ -2,12 +2,20 @@ import React from "react";
 import "../pages/Dashboard.css";
 import { MdDeleteOutline } from "react-icons/md";
 
-const SnippetItem = ({ thumbnail, title, date, handleItemClick, handleSnippetDelete }) => {
+const SnippetItem = ({
+  thumbnail,
+  title,
+  date,
+  handleItemClick,
+  handleSnippetDelete,
+}) => {
   return (
     <div>
-      <div className="template-item" onClick={handleItemClick}>
+      <div className="template-item">
         <div className="template-rect">
-          <div className="template-rect-text">{thumbnail}</div>
+          <div className="template-rect-text" onClick={handleItemClick}>
+            {thumbnail}
+          </div>
           <div className="delete-btn" onClick={handleSnippetDelete}>
             <MdDeleteOutline />
           </div>
