@@ -38,7 +38,7 @@ const Registerpage = () => {
         // Route to dashboard
         navigate("/login");
       } else {
-        // Handle error response
+        // Handle error responses
         console.error("Register failed");
         const errorData = await response.json();
         setError(errorData.message || "Register failed");
@@ -97,7 +97,7 @@ const Registerpage = () => {
                 setPassword(e.target.value);
               }}
             ></input>
-            {/* Register Error Message */}
+            {/* Register Error Messages */}
             {error && <div className="error-message">{error}</div>}
             <button className="login-btn btn-primary">Sign In</button>
           </form>

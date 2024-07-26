@@ -13,7 +13,7 @@ const Loginpage = () => {
     navigate("/register");
   }
 
-  // Handle Login Btn Click
+  // Handle Login Button Click
   async function handleSubmit(event) {
     event.preventDefault();
     try {
@@ -33,7 +33,7 @@ const Loginpage = () => {
         navigate("/dashboard");
       } else {
 
-        // Handle error response
+        // Handle error responses
         console.error("Login failed");
         const errorData = await response.json();
         setError(errorData.message || "Login failed");
@@ -74,7 +74,7 @@ const Loginpage = () => {
                 setPassword(e.target.value);
               }}
             ></input>
-            {/* Login Error Message */}
+            {/* Login Error Messages */}
             {error && <div className="error-message">{error}</div>}
             <button className="login-btn btn-primary">Log In</button>
           </form>
