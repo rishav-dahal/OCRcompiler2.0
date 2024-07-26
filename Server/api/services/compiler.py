@@ -46,7 +46,8 @@ def compile_python(code, input_data):
 
 def compile_c(code, input_data):
     try:
-        with open('temp.c', 'w') as f:
+        file_name = 'temp.c'
+        with open(file_name, 'w') as f:
             f.write(code)
         
         compile_result = subprocess.run(['gcc', 'temp.c', '-o', 'temp.out'], capture_output=True, text=True)
@@ -54,6 +55,9 @@ def compile_c(code, input_data):
             return Response({'error': compile_result.stderr})
         
         run_result = subprocess.run(['./temp.out'], input=input_data, capture_output=True, text=True)
+        
+        os.remove(file_name)
+        os.remove('temp.out')
         
         return Response({'output': run_result.stdout.strip()})
     except Exception as e:
@@ -64,7 +68,8 @@ from rest_framework.response import Response
 
 def compile_cpp(code, input_data):
     try:
-        with open('temp.cpp', 'w') as f:
+        file_name = 'temp.cpp'
+        with open(file_name, 'w') as f:
             f.write(code)
 
         compile_result = subprocess.run(['g++', 'temp.cpp', '-o', 'temp.out'], capture_output=True, text=True)
@@ -73,6 +78,8 @@ def compile_cpp(code, input_data):
         
         run_result = subprocess.run(['./temp.out'], input=input_data, capture_output=True, text=True)
         
+        os.remove(file_name)
+        os.remove('temp.out')
         return Response({'output': run_result.stdout.strip()})
     except Exception as e:
         return Response({'error': str(e)})
