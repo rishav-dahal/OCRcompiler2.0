@@ -3,10 +3,12 @@ import "../App.css";
 import "./Dashboard.css";
 import SnippetItem from "../components/SnippetItem";
 import { useNavigate } from "react-router-dom";
-import Homepage from "./Homepage";
+import templateSnippetsData from "../data/templateSnippetsData.json";
+import TemplateSnippetItem from "../components/TemplateSnippetItem";
 
 const Dashboard = () => {
   const [documents, setDocuments] = useState([]);
+  const [templateDocuments, setTemplateDocuments] = useState([]);
   const navigate = useNavigate();
 
   const handleButtonClick = () => {
@@ -14,9 +16,13 @@ const Dashboard = () => {
   };
 
   // Handle snippet item click
-  const handleItemClick = (formattedCode) => {
-    navigate("/home", { state: { code: formattedCode } });
+  const handleItemClick = (formattedCode, language) => {
+    navigate("/home", { state: { code: formattedCode, language: language } });
   };
+
+  useEffect(() => {
+    setTemplateDocuments(templateSnippetsData.snippets);
+  });
 
   useEffect(() => {
     const token = localStorage.getItem("access"); // Retrieve JWT token from localStorage
@@ -44,10 +50,9 @@ const Dashboard = () => {
   }, []);
 
   // Logging outside useEffect to observe state updates
-useEffect(() => {
-  console.log(documents); // Check the updated state value
-}, [documents]); 
-
+  useEffect(() => {
+    console.log(documents); // Check the updated state value
+  }, [documents]);
 
   return (
     <div className="App">
@@ -66,36 +71,13 @@ useEffect(() => {
       <div className="template-wrapper">
         <div className="template-header">Start with a template</div>
         <div className="template-items">
-          <div className="template-item">
-            <div className="template-rect">
-              <div className="template-rect-text">Py</div>
-            </div>
-            <div className="template-info">Python Document</div>
-          </div>
-          <div className="template-item">
-            <div className="template-rect">
-              <div className="template-rect-text">JS</div>
-            </div>
-            <div className="template-info">Javascript Document</div>
-          </div>
-          <div className="template-item">
-            <div className="template-rect">
-              <div className="template-rect-text">C</div>
-            </div>
-            <div className="template-info">C Document</div>
-          </div>
-          <div className="template-item">
-            <div className="template-rect">
-              <div className="template-rect-text">C++</div>
-            </div>
-            <div className="template-info">C++ Document</div>
-          </div>
-          <div className="template-item">
-            <div className="template-rect">
-              <div className="template-rect-text">text</div>
-            </div>
-            <div className="template-info">General Document</div>
-          </div>
+          {templateDocuments.map((item) => (
+            <TemplateSnippetItem
+              key={item.id}
+              thumbnail={item.language}
+              handleItemClick={() => handleItemClick(item.formatted_code, item.language)} // Pass formatted_code on item click
+            />
+          ))}
         </div>
       </div>
 

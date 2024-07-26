@@ -1,9 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AiOutlineScan } from "react-icons/ai";
-// import CodeMirror from "@uiw/react-codemirror";
-// import { cpp } from "@codemirror/lang-cpp";
-// import { EditorView } from "codemirror";
-// import { dracula } from "@uiw/codemirror-theme-dracula";
 import Editor from "@monaco-editor/react";
 
 const editorOptions = {
@@ -15,11 +11,19 @@ function OcrSection({
   code,
   handleRunClick,
   updateExtension,
+  language,
 }) {
-  const [language, setLanguage] = useState("javascript");
+  const [codelanguage, setCodeLanguage] = useState("");
+
+  useEffect(() => {
+    console.log("Language prop received:", language); // Debugging line
+    if (language) {
+      setCodeLanguage(language);
+    }
+  }, [language]);
 
   const onLanguageChange = (e) => {
-    setLanguage(e.target.value);
+    setCodeLanguage(e.target.value);
     updateExtension(e.target.value);
   };
 
@@ -31,12 +35,10 @@ function OcrSection({
           OCR
         </div>
         <div className="dropdown">
-          <select onChange={onLanguageChange}>
-            <option value="js" selected>
-              Javascript
-            </option>
-            <option value="c">C</option>
+          <select onChange={onLanguageChange} value={"guysd"}>
+            <option value="js">Javascript</option>
             <option value="cpp">C++</option>
+            <option value="c">C</option>
             <option value="py">Python</option>
           </select>
         </div>
@@ -46,7 +48,7 @@ function OcrSection({
           className="monaco-wrapper"
           height="90vh"
           // defaultLanguage={language}
-          language={language}
+          language={codelanguage}
           defaultValue=""
           theme="vs-dark"
           options={editorOptions}

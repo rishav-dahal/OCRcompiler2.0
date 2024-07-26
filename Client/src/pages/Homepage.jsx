@@ -1,4 +1,4 @@
-import { useState, useRef , useEffect} from "react";
+import { useState, useRef, useEffect } from "react";
 import "../App.css";
 import ImageSection from "../section/ImageSection.jsx";
 import OcrSection from "../section/OcrSection";
@@ -22,6 +22,7 @@ function App() {
   const [windowSize, setWindowSize] = useState();
   const [progressBar, setProgressBar] = useState(0);
   const [extension, setExtension] = useState("code.txt");
+  const [language, setLanguage] = useState("");
   const navigate = useNavigate();
 
   //handle logo click
@@ -34,6 +35,9 @@ function App() {
   useEffect(() => {
     if (location.state && location.state.code) {
       setCode(location.state.code);
+    }
+    if (location.state && location.state.language) {
+      setLanguage(location.state.language);
     }
   }, [location.state]);
 
@@ -186,8 +190,8 @@ function App() {
         {/* {data.ocr} */}
         <div className="navbar">
           <div className="logo">
-            <div className="" onClick={handleLogoClick} >
-            <span className="primary-color">OCR</span>compiler
+            <div className="" onClick={handleLogoClick}>
+              <span className="primary-color">OCR</span>compiler
             </div>
           </div>
           <div className="save-btn btn-primary" onClick={downloadTxtFile}>
@@ -214,6 +218,7 @@ function App() {
             onchangeHandler={oninputChangeHandler}
             handleRunClick={handleRunClick}
             updateExtension={updateExtension}
+            language={language}
           />
           <OutputSection
             output={output}
