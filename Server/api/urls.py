@@ -5,6 +5,7 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
 
+# This is URls part
 urlpatterns = [
     path('upload/', upload_image, name='upload_image'),
     path('signup/', signup, name='signup'),
