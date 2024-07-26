@@ -45,7 +45,9 @@ const Loginpage = () => {
   }
   return (
     <div className="login-container">
-      <div className="left-panel"></div>
+      <div className="left-panel">
+        
+      </div>
       <div className="right-panel">
         <div className="right-panel-wrapper">
           <div className="logo login-logo">

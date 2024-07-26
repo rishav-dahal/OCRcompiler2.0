@@ -17,7 +17,10 @@
   border-radius: 15px;
   padding: 20px;
   margin: 15px;
-  background-color: rgba(255, 255, 255, 0.1);
+  /* background-color: rgba(255, 255, 255, 0.1); */
+  background: url("../../images/banner.png");
+  background-size: cover;
+  background-position: center;
 }
 .right-panel {
   width: 60%;
@@ -36,11 +39,11 @@
   font-size: 20px;
 }
 .welcome-text {
-    font-weight: 700;
-    font-size: 30px;
+  font-weight: 700;
+  font-size: 30px;
 }
-.welcome-subtext{
-    margin-top: 10px;
+.welcome-subtext {
+  margin-top: 10px;
 }
 .input-form {
   margin-top: 40px;
@@ -56,23 +59,23 @@
   border: none;
   border-bottom: 2px solid var(--green);
 }
-.login-btn{
-    border: none;
-    font-weight: 600;
-    width: 30%;
-    padding: 10px 25px;
-    font-size: 16px;
-    margin-top: 20px;
+.login-btn {
+  border: none;
+  font-weight: 600;
+  width: 30%;
+  padding: 10px 25px;
+  font-size: 16px;
+  margin-top: 20px;
 }
-.register-text{
-    margin-top: 15px;
+.register-text {
+  margin-top: 15px;
 }
-.register-cta{
-    margin-left: 5px;
-    font-weight: 600;
-    cursor: pointer;
+.register-cta {
+  margin-left: 5px;
+  font-weight: 600;
+  cursor: pointer;
 }
-.error-message{
+.error-message {
   color: red;
   font-size: 16px;
 }
