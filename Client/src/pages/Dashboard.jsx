@@ -90,7 +90,9 @@ const Dashboard = () => {
         <div className="save-btn btn-primary" onClick={handleButtonClick}>
           Create a new Document
         </div>
-        <div className="user-img"></div>
+        {localStorage.getItem("access") !== null && (
+          <div className="btn-secondary logout-btn">Log out</div>
+        )}
       </div>
 
       {/* Start with a Template */}
