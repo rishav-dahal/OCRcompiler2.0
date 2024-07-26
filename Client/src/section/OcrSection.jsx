@@ -18,7 +18,7 @@ function OcrSection({
   useEffect(() => {
     console.log("Language prop received:", language); // Debugging line
     if (language) {
-      setCodeLanguage(language.toUpperCase());
+      setCodeLanguage(language);
     }
   }, [language]);
 
@@ -39,11 +39,11 @@ function OcrSection({
             defaultValue={codelanguage}
             value={codelanguage}
           >
-            <option value="Js">Javascript</option>
-            <option value="Java">Java</option>
-            <option value="C++">C++</option>
-            <option value="C">C</option>
-            <option value="Python">Python</option>
+            <option value="javascript">Javascript</option>
+            <option value="java">Java</option>
+            <option value="cpp">C++</option>
+            <option value="c">C</option>
+            <option value="python">Python</option>
           </select>
         </div>
       </div>
@@ -52,7 +52,7 @@ function OcrSection({
           className="monaco-wrapper"
           height="90vh"
           // defaultLanguage={language}
-          language={codelanguage.toLowerCase()}
+          language={codelanguage}
           defaultValue=""
           theme="vs-dark"
           options={editorOptions}
