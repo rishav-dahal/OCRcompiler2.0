@@ -26,6 +26,28 @@ function OcrSection({
     setCodeLanguage(e.target.value);
     updateExtension(e.target.value);
   };
+
+  let editorsLanguage;
+
+  switch (codelanguage) {
+    case "C++":
+      editorsLanguage = "cpp";
+      break;
+    case "C":
+      editorsLanguage = "c";
+      break;
+    case "Java":
+      editorsLanguage = "java";
+      break;
+    case "Js":
+      editorsLanguage = "javascript";
+      break;
+    case "Python":
+      editorsLanguage = "python";
+      break;
+    default:
+      editorsLanguage = codelanguage.toLowerCase();
+  }
   return (
     <div className="ocr-section">
       <div className="section-title">
@@ -39,20 +61,21 @@ function OcrSection({
             defaultValue={codelanguage}
             value={codelanguage}
           >
-            <option value="javascript">Javascript</option>
-            <option value="java">Java</option>
-            <option value="cpp">C++</option>
-            <option value="c">C</option>
-            <option value="python">Python</option>
+            <option value="Js">Javascript</option>
+            <option value="Java">Java</option>
+            <option value="C++">C++</option>
+            <option value="C">C</option>
+            <option value="Python">Python</option>
           </select>
         </div>
       </div>
+
       <div className="code-editor">
         <Editor
           className="monaco-wrapper"
           height="90vh"
           // defaultLanguage={language}
-          language={codelanguage}
+          language={editorsLanguage}
           defaultValue=""
           theme="vs-dark"
           options={editorOptions}
