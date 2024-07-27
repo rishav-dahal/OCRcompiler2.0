@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "../App.css";
 import "./Dashboard.css";
-import axios from "axios"; 
+import axios from "axios";
 import SnippetItem from "../components/SnippetItem";
 import { useNavigate } from "react-router-dom";
 import templateSnippetsData from "../data/templateSnippetsData.json";
@@ -14,6 +14,15 @@ const Dashboard = () => {
 
   const handleButtonClick = () => {
     navigate("/home");
+  };
+
+  // Handle logo click
+  const handleLogoClick = () => {
+    {
+      localStorage.getItem("access") !== null
+        ? navigate("/")
+        : navigate("/login");
+    }
   };
 
   // Handle snippet item click
@@ -106,7 +115,7 @@ const Dashboard = () => {
     <div className="App">
       {/* Navbar */}
       <div className="navbar">
-        <div className="logo">
+        <div className="logo" onClick={handleLogoClick}>
           <span className="primary-color">OCR</span>compiler
         </div>
         <div className="save-btn btn-primary" onClick={handleButtonClick}>
