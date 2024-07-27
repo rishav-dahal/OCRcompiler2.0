@@ -24,7 +24,9 @@ const Landingpage = () => {
         {/* onClick={downloadTxtFile} */}
         {/* <a href="/login"> */}
         <div className="save-btn btn-primary" onClick={handleClick} ddd>
-          Login
+          {localStorage.getItem("access") !== null
+            ? "Go to your dashboard"
+            : "Login"}
         </div>
         {/* </a> */}
       </div>
