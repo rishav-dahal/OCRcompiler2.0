@@ -149,7 +149,33 @@ function App() {
 
   //Handles compile btn click
   const handleRunClick = async () => {
-    const lowercaseLanguage = language.toLowerCase();
+    let lowercaseLanguage;
+    switch (language) {
+      case "C":
+        lowercaseLanguage = "c";
+        break;
+      case "js":
+        lowercaseLanguage = "javascript";
+        break;
+      case "Python":
+        lowercaseLanguage = "python";
+        break;
+      case "py":
+        lowercaseLanguage = "python";
+        break;
+      case "Py":
+        lowercaseLanguage = "python";
+        break;
+      case "C++":
+        lowercaseLanguage = "cpp";
+        break;
+      case "Cpp":
+        lowercaseLanguage = "cpp";
+        break;
+      default:
+        language.toLowerCase();
+    }
+
     if (!code) {
       setModal(true);
       setModalText("There's no code to compile.");
