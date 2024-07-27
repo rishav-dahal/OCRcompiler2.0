@@ -149,7 +149,7 @@ function App() {
 
   //Handles compile btn click
   const handleRunClick = async () => {
-    const language = language.toLowerCase();
+    const lowercaseLanguage = language.toLowerCase();
     if (!code) {
       setModal(true);
       setModalText("There's no code to compile.");
@@ -162,7 +162,7 @@ function App() {
       const payload = {
         code,
         input,
-        language,
+        language: lowercaseLanguage,
       };
       const outputData = await axios.post(
         "http://localhost:8000/api/v1/compile/",
