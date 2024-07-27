@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Loginpage.css";
 import { useNavigate } from "react-router-dom";
 
@@ -11,9 +11,22 @@ const Registerpage = () => {
 
   const navigate = useNavigate();
 
+  // Route if there are tokens set
+  useEffect(() => {
+    const token = localStorage.getItem("access");
+    if (token) {
+      navigate("/dashboard");
+    }
+  }, [navigate]);
+
   function handleClick() {
     navigate("/login");
   }
+
+  // handle icon click
+  const handleLogoClick = () => {
+    navigate("/");
+  };
 
   // handle form submit
   async function handleSubmit(event) {
@@ -53,7 +66,7 @@ const Registerpage = () => {
       <div className="left-panel"></div>
       <div className="right-panel">
         <div className="right-panel-wrapper">
-          <div className="logo login-logo">
+          <div className="logo login-logo" onClick={handleLogoClick}>
             <span className="primary-color">OCR</span>compiler
           </div>
           <div className="welcome-text">Create a new account !</div>

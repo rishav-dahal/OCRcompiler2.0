@@ -11,7 +11,7 @@
 .container {
   background-color: var(--dark);
   min-height: 100vh;
-  padding-bottom: 70px;
+  padding-bottom: 200px;
   width: 100%;
   color: var(--white);
   display: flex;
@@ -43,7 +43,7 @@
   position: relative;
 }
 .landing-img img {
-  border-radius: 5px;
+  border-radius: 15px;
 }
 .wiggle-wrapper {
   position: relative;
@@ -58,7 +58,7 @@
   z-index: 100;
   position: absolute;
   padding: 50px 40px;
-  border-top: 1px solid var(--grey);
+  border-top: 2px solid var(--grey);
   display: flex;
   align-items: center;
   justify-content: center;

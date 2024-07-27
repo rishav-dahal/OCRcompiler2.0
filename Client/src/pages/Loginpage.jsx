@@ -8,6 +8,14 @@ const Loginpage = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
 
+  // Route if there are tokens set
+  useEffect(() => {
+    const token = localStorage.getItem('access');
+    if (token) {
+      navigate('/dashboard');
+    }
+  }, [navigate]);
+
   // Route to /register
   function handleClick() {
     navigate("/register");
@@ -17,6 +25,12 @@ const Loginpage = () => {
   function handleGuestLogin() {
     navigate("/dashboard");
   }
+
+  // handle icon click
+  const handleLogoClick = ()=>{
+    navigate("/");
+  }
+
   // Handle Login Button Click
   async function handleSubmit(event) {
     event.preventDefault();
@@ -51,7 +65,7 @@ const Loginpage = () => {
       <div className="left-panel"></div>
       <div className="right-panel">
         <div className="right-panel-wrapper">
-          <div className="logo login-logo">
+          <div className="logo login-logo" onClick={handleLogoClick}>
             <span className="primary-color">OCR</span>compiler
           </div>
           <div className="welcome-text">
