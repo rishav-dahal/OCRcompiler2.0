@@ -137,7 +137,10 @@ const Dashboard = () => {
               key={item.id}
               thumbnail={item.language}
               handleItemClick={() =>
-                handleItemClick(item.formatted_code, item.language)
+                handleItemClick(
+                  item.formatted_code,
+                  item.language
+                )
               } // Pass formatted_code on item click
             />
           ))}

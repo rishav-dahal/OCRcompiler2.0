@@ -85,7 +85,7 @@ function App() {
         setProgressBar(m.progress);
       },
     });
-    
+
     // Check if the OCR output contains a substantial amount of text
     const minTextLength = 5;
 
@@ -104,7 +104,7 @@ function App() {
         const response = await axios.post(
           "http://localhost:8000/api/v1/upload/",
           formData,
-          {headers}
+          { headers }
         );
         console.log(response);
         console.log(response.data.snippet);
@@ -112,8 +112,7 @@ function App() {
         setCode(response.data.snippet.formatted_code);
         if (response.data.snippet.language) {
           setLanguage(response.data.snippet.language);
-        }
-        else{
+        } else {
           setLanguage("");
         }
         // fetch("/ocr")
@@ -150,6 +149,7 @@ function App() {
 
   //Handles compile btn click
   const handleRunClick = async () => {
+    const lowercaseLang = language.toLowerCase();
     if (!code) {
       setModal(true);
       setModalText("There's no code to compile.");
@@ -162,9 +162,12 @@ function App() {
       const payload = {
         code,
         input,
-        language,
+        lowercaseLang,
       };
-      const outputData = await axios.post("http://localhost:8000/api/v1/compile/", payload);
+      const outputData = await axios.post(
+        "http://localhost:8000/api/v1/compile/",
+        payload
+      );
       console.log("OUTPUTDATA:", outputData.data);
       if (outputData.data.error) {
         setOutput(outputData.data.error);
