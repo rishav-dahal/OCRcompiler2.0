@@ -61,6 +61,7 @@ function App() {
     }
   };
 
+  //Updates the extension variable
   const updateExtension = (e) => {
     setExtension(e);
   };
