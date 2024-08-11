@@ -118,20 +118,6 @@ function App() {
           setLanguage("");
         }
         
-        if (response.data.snippet.language) {
-          console.log(response.data.snippet.language);
-          setLanguage(response.data.snippet.language);
-          console.log("Language" ,language);
-        } else {
-          setLanguage("");
-        }
-        // fetch("/ocr")
-        //   .then((response) => response.json())
-        //   .then((data) => {
-        //     setData(data);
-        //     setCode(data.ocr);
-        //     console.log(code);d
-        //Handles the response from the backend if needed
       } catch (error) {
         console.error("Error uploading image:", error);
       }
@@ -159,46 +145,52 @@ function App() {
 
   //Handles compile btn click
   const handleRunClick = async () => {
-    // let lowercaseLanguage;
-    // switch (language) {
-    //   case "C":
-    //     lowercaseLanguage = "c";
-    //     break;
-    //     case "Js":
-    //       lowercaseLanguage = "javascript";
-    //       break;
-    //     case "JS":
-    //       lowercaseLanguage = "javascript";
-    //       break;
-    //     case "JAVASCRIPT":
-    //       lowercaseLanguage = "javascript";
-    //       break;
-    //   case "js":
-    //     lowercaseLanguage = "javascript";
-    //     break;
-    //   case "Python":
-    //     lowercaseLanguage = "python";
-    //     break;
-    //   case "py":
-    //     lowercaseLanguage = "python";
-    //     break;
-    //   case "Py":
-    //     lowercaseLanguage = "python";
-    //     break;
-    //   case "C++":
-    //     lowercaseLanguage = "cpp";
-    //     break;
-    //   case "Cpp":
-    //     lowercaseLanguage = "cpp";
-    //     break;
-    //     case "Java":
-    //       lowercaseLanguage = "java";
-    //     case "unknown":
-    //       lowercaseLanguage = "c";
-    //       break;
-    //   default:
-    //     language.toLowerCase();
-    // }
+    let lowercaseLanguage;
+    switch (language) {
+      case "C":
+        lowercaseLanguage = "c";
+        break;
+      case "c":
+        lowercaseLanguage = "c";
+        break;
+      case "Js":
+        lowercaseLanguage = "javascript";
+        break;
+      case "JS":
+        lowercaseLanguage = "javascript";
+        break;
+      case "JAVASCRIPT":
+        lowercaseLanguage = "javascript";
+        break;
+      case "js":
+        lowercaseLanguage = "javascript";
+        break;
+      case "Python":
+        lowercaseLanguage = "python";
+        break;
+      case "py":
+        lowercaseLanguage = "python";
+        break;
+      case "Py":
+        lowercaseLanguage = "python";
+        break;
+      case "C++":
+        lowercaseLanguage = "cpp";
+        break;
+      case "Cpp":
+        lowercaseLanguage = "cpp";
+        break;
+      case "java":
+        lowercaseLanguage = "java";
+        break;
+      case "Java":
+        lowercaseLanguage = "java";
+      case "unknown":
+        lowercaseLanguage = "c";
+        break;
+      default:
+        language.toLowerCase();
+    }
 
     if (!code) {
       setModal(true);

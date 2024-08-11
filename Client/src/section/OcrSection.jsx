@@ -28,7 +28,6 @@ function OcrSection({
   };
 
   let editorsLanguage;
-
   switch (codelanguage) {
     case "C++":
       editorsLanguage = "cpp";
@@ -58,7 +57,6 @@ function OcrSection({
         <div className="dropdown">
           <select
             onChange={onLanguageChange}
-            defaultValue={codelanguage}
             value={codelanguage}
           >
             <option value="Js">Javascript</option>
@@ -76,7 +74,6 @@ function OcrSection({
           height="90vh"
           // defaultLanguage={language}
           language={editorsLanguage}
-          defaultValue=""
           theme="vs-dark"
           options={editorOptions}
           value={code}
