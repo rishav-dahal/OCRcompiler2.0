@@ -84,13 +84,14 @@ const Dashboard = () => {
   useEffect(() => {
     const token = localStorage.getItem("access"); // Retrieve JWT token from localStorage
     // console.log(token); // Check the token value
-    fetch("http://localhost:8000/api/v1/profile/", {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`, // Include the JWT token in the Authorization header
-        "Content-Type": "application/json",
-      },
-    })
+    if (token)
+      fetch("http://localhost:8000/api/v1/profile/", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`, // Include the JWT token in the Authorization header
+          "Content-Type": "application/json",
+        },
+      })
       .then((response) => {
         if (response.ok) {
           return response.json();
@@ -98,7 +99,7 @@ const Dashboard = () => {
         throw new Error("Network response was not ok.");
       })
       .then((data) => {
-        console.log(data); // Check the response structure
+        // console.log(data); // Check the response structure
         setDocuments(data.snippets);
         // setDocuments(data || []); // Adjust according to the actual structure
         // console.log(documents); // Check the updated state value
@@ -108,7 +109,6 @@ const Dashboard = () => {
 
   // Logging outside useEffect to observe state updates
   useEffect(() => {
-    console.log(documents); // Check the updated state value
   }, [documents]);
 
   return (
