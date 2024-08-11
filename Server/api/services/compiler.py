@@ -22,9 +22,11 @@ def compile_code(request):
 
 def compile_python(code, input_data):
     try:
+        if input_data is None:
+            input_data = ""
         # If input data is bytes, convert it to string
-        if isinstance(input_data, bytes):
-            input_data = input_data.decode()
+        if isinstance(input_data,( bytes,int,float)):
+            input_data = str(input_data)
 
         result = subprocess.run(
             ['python', '-c', code], 
@@ -33,17 +35,17 @@ def compile_python(code, input_data):
             text=True
         )
 
-        # Get the last line of the output
-        output_lines = result.stdout.strip().split('\n')
-        if len(output_lines) > 1:
-            final_output = output_lines[-1]  # Get the last line which should be the result
+       # Get the output or error message
+        if result.returncode == 0:
+            output_lines = result.stdout.strip().split('\n')
+            final_output = output_lines[-1] if output_lines else ""
+            return Response({'output': final_output})
         else:
-            final_output = result.stdout.strip()
+            return Response({'error': result.stderr.strip()})
 
-        return Response({'output': final_output})
     except Exception as e:
         return Response({'error': str(e)})
-
+    
 def compile_c(code, input_data):
     try:
         file_name = 'temp.c'
