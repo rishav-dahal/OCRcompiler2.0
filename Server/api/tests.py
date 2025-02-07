@@ -268,7 +268,6 @@ from sklearn.metrics import (
     precision_recall_curve,
     classification_report,
     accuracy_score,
-    confusion_matrix,
 )
 import pytesseract
 from PIL import Image

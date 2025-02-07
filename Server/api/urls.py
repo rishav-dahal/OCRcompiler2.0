@@ -10,7 +10,6 @@ from .views import (
     logout_view,
 )
 from rest_framework_simplejwt.views import (
-    TokenObtainPairView,
     TokenRefreshView,
 )
 
