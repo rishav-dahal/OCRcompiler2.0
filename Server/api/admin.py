@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
-from .models import *
+from .models import User, Guest, CodeSnippet, OCRProcess
 
 class UserAdmin(BaseUserAdmin):
     fieldsets = (

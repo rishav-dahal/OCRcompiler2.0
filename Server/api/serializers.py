@@ -1,5 +1,5 @@
 from rest_framework import serializers  
-from .models import *
+from .models import User, Guest, CodeSnippet, OCRProcess
 from .services.code_formatter import format_code
 from django.contrib.auth.password_validation import validate_password
 from django.db import transaction

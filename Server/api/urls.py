@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import *
+from .views import upload_image, signup, login, user_profile, download_snippet, delete_code_snippet, compiler_service, logout_view
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,

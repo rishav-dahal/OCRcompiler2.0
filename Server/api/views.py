@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.decorators import api_view, permission_classes
 from django.contrib.auth import authenticate
-from .serializers import *
+from .serializers import UserLoginSerializer, RegistrationSerializer, OCRProcessSerializer, UserSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
 from werkzeug.utils import secure_filename
 import os
