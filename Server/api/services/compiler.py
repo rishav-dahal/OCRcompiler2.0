@@ -3,7 +3,6 @@ from rest_framework.response import Response
 import re
 import os
 
-
 def compile_code(request):
     code = request.data.get("code")
     language = request.data.get("language")
@@ -70,8 +69,7 @@ def compile_c(code, input_data):
         return Response({"error": str(e)})
 
 
-import subprocess
-from rest_framework.response import Response
+
 
 
 def compile_cpp(code, input_data):

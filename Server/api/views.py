@@ -20,6 +20,7 @@ from .services.ocr import run_ocr
 from django.http import HttpResponse
 from .services.compiler import compile_code
 from .permissions import IsSnippetOwner
+from .models import CodeSnippet, Guest
 
 
 UPLOAD_FOLDER = "Images"
@@ -177,5 +178,5 @@ def logout_view(request):
         return Response(
             {"msg": "Logged out successfully"}, status=status.HTTP_205_RESET_CONTENT
         )
-    except Exception as e:
+    except Exception :
         return Response({"msg": "Invalid token"}, status=status.HTTP_400_BAD_REQUEST)
