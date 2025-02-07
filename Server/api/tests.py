@@ -47,7 +47,7 @@
 # all_punctuation = string.punctuation  # All punctuation symbols
 # # all_symbols = list("+-*/%= == != <> <= >= && || ! & | ^ ~ << >> += -= *= /= %= . , ; {} [] () ' \" \ # /* */ // ")
 # # Combine all into a single list
-# all_labels = list(all_letters) + list(all_digits) 
+# all_labels = list(all_letters) + list(all_digits)
 
 # # Get the directory of the CSV file
 # csv_dir = os.path.dirname(csv_path)
@@ -62,23 +62,23 @@
 # for index, row in df.iterrows():
 #     image_name = row['Image']
 #     ground_truth = row['Text']
-    
+
 #     # Process the image
 #     image_path = os.path.join(csv_dir, image_name)
 #     recognized_text = get_recognized_text(image_path)
-    
+
 #     if recognized_text:
 #         # Collect all unique characters for labels
 #         # all_labels = sorted(set(ground_truth + recognized_text))
-        
+
 #         # Initialize confusion matrix
 #         conf_matrix = create_confusion_matrix(ground_truth, recognized_text, all_labels)
 #         all_conf_matrices.append(conf_matrix)
-        
+
 #         # Calculate precision and recall
 #         y_true = [1 if gt == rec else 0 for gt, rec in zip(ground_truth, recognized_text)]
 #         y_scores = [1 if rec in ground_truth else 0 for rec in recognized_text]
-        
+
 #         # Ensure the lengths of y_true and y_scores are the same by padding the shorter list
 #         max_length = max(len(y_true), len(y_scores))
 #         y_true.extend([0] * (max_length - len(y_true)))  # Padding y_true with 0s
@@ -200,22 +200,22 @@
 # for index, row in df.iterrows():
 #     image_name = row['Image']
 #     ground_truth = row['Text']
-    
+
 #     # Process the image
 #     image_dir = 'D:/6th sem/project/OCRCompiler/Server/media/Test/'
 #     image_path = os.path.join(image_dir, image_name)
 #     recognized_text = get_recognized_text(image_path)
-    
+
 #     if recognized_text:
 #         # Pad the shorter sequence to match lengths
 #         max_length = max(len(ground_truth), len(recognized_text))
 #         ground_truth = ground_truth.ljust(max_length)
 #         recognized_text = recognized_text.ljust(max_length)
-        
+
 #         # Initialize confusion matrix
 #         conf_matrix = create_confusion_matrix(ground_truth, recognized_text, all_labels)
 #         all_conf_matrices.append(conf_matrix)
-        
+
 #         # Collect data for classification report
 #         all_y_true.extend(list(ground_truth))
 #         all_y_pred.extend(list(recognized_text))
@@ -264,11 +264,17 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
-from sklearn.metrics import precision_recall_curve, classification_report, accuracy_score, confusion_matrix
+from sklearn.metrics import (
+    precision_recall_curve,
+    classification_report,
+    accuracy_score,
+    confusion_matrix,
+)
 import pytesseract
 from PIL import Image
 import os
 import string
+
 
 # Function to create a confusion matrix
 def create_confusion_matrix(ground_truth, recognized_text, labels):
@@ -281,23 +287,27 @@ def create_confusion_matrix(ground_truth, recognized_text, labels):
             matrix[gt_index, rec_index] += 1
     return matrix
 
+
 # Function to obtain recognized text from an image using Tesseract OCR
-def get_recognized_text(image_path, lang='eng'):
+def get_recognized_text(image_path, lang="eng"):
     try:
         image = Image.open(image_path)
         config = "--oem 3 --psm 6"
-        recognized_text = pytesseract.image_to_string(image, config=config, lang=lang).strip()
+        recognized_text = pytesseract.image_to_string(
+            image, config=config, lang=lang
+        ).strip()
         return recognized_text
     except Exception as e:
         print(f"Error processing {image_path}: {str(e)}")
         return ""
 
+
 # Read the CSV file
-csv_path = 'D:/6th sem/project/OCRCompiler/Server/media/Data/ocr.csv'
-df = pd.read_csv(csv_path, sep=',', engine='python', encoding='utf-8')
+csv_path = "D:/6th sem/project/OCRCompiler/Server/media/Data/ocr.csv"
+df = pd.read_csv(csv_path, sep=",", engine="python", encoding="utf-8")
 
 # Ensure the expected columns are present
-expected_columns = ['Image', 'Text']
+expected_columns = ["Image", "Text"]
 if not set(expected_columns).issubset(df.columns):
     raise ValueError("CSV file must contain 'Image' and 'Text' columns")
 
@@ -314,24 +324,24 @@ all_y_pred = []
 
 # Process each row in the DataFrame
 for index, row in df.iterrows():
-    image_name = row['Image']
-    ground_truth = row['Text']
-    
+    image_name = row["Image"]
+    ground_truth = row["Text"]
+
     # Process the image
-    image_dir = 'D:/6th sem/project/OCRCompiler/Server/media/Output/'
+    image_dir = "D:/6th sem/project/OCRCompiler/Server/media/Output/"
     image_path = os.path.join(image_dir, image_name)
     recognized_text = get_recognized_text(image_path)
-    
+
     if recognized_text:
         # Pad the shorter sequence to match lengths
         max_length = max(len(ground_truth), len(recognized_text))
         ground_truth = ground_truth.ljust(max_length)
         recognized_text = recognized_text.ljust(max_length)
-        
+
         # Initialize confusion matrix
         conf_matrix = create_confusion_matrix(ground_truth, recognized_text, all_labels)
         all_conf_matrices.append(conf_matrix)
-        
+
         # Collect data for classification report
         all_y_true.extend(list(ground_truth))
         all_y_pred.extend(list(recognized_text))
@@ -343,20 +353,29 @@ combined_conf_matrix = np.sum(all_conf_matrices, axis=0)
 
 # Plot combined confusion matrix
 plt.figure(figsize=(20, 20))
-plt.imshow(combined_conf_matrix, cmap='Blues', interpolation='nearest')
-plt.title('Combined Confusion Matrix', fontsize=18)
-plt.xlabel('Predicted', fontsize=16)
-plt.ylabel('Actual', fontsize=16)
-plt.xticks(ticks=np.arange(len(all_labels)), labels=all_labels, rotation=90, fontsize=10)
+plt.imshow(combined_conf_matrix, cmap="Blues", interpolation="nearest")
+plt.title("Combined Confusion Matrix", fontsize=18)
+plt.xlabel("Predicted", fontsize=16)
+plt.ylabel("Actual", fontsize=16)
+plt.xticks(
+    ticks=np.arange(len(all_labels)), labels=all_labels, rotation=90, fontsize=10
+)
 plt.yticks(ticks=np.arange(len(all_labels)), labels=all_labels, fontsize=10)
 plt.colorbar()
 plt.tight_layout()
-plt.savefig('media/figures/combined_confusion_matrix.png')
+plt.savefig("media/figures/combined_confusion_matrix.png")
 plt.show()
 
 # Generate and print classification report
 accuracy = accuracy_score(all_y_true, all_y_pred)
-report = classification_report(all_y_true, all_y_pred, labels=all_labels, zero_division=0, output_dict=False, target_names=all_labels)
+report = classification_report(
+    all_y_true,
+    all_y_pred,
+    labels=all_labels,
+    zero_division=0,
+    output_dict=False,
+    target_names=all_labels,
+)
 print(report)
 print(f"Accuracy: {accuracy:.3f}\n")
 
@@ -368,9 +387,9 @@ precision, recall, _ = precision_recall_curve(y_true_binary, y_scores_binary)
 
 # Plot combined precision-recall curve
 plt.figure()
-plt.plot(recall, precision, marker='.')
-plt.xlabel('Recall', fontsize=14)
-plt.ylabel('Precision', fontsize=14)
-plt.title('Combined Precision-Recall Curve', fontsize=16)
-plt.savefig('media/figures/combined_precision_recall_curve.png')
+plt.plot(recall, precision, marker=".")
+plt.xlabel("Recall", fontsize=14)
+plt.ylabel("Precision", fontsize=14)
+plt.title("Combined Precision-Recall Curve", fontsize=16)
+plt.savefig("media/figures/combined_precision_recall_curve.png")
 plt.show()
