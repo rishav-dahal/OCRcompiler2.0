@@ -2,7 +2,6 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.decorators import api_view, permission_classes
-from django.contrib.auth import authenticate
 from .serializers import (
     UserLoginSerializer,
     RegistrationSerializer,
@@ -40,18 +39,21 @@ def get_tokens_for_user(user):
 def login(request):
     serializer = UserLoginSerializer(data=request.data)
     if serializer.is_valid():
-        email = serializer.validated_data.get("email")
-        password = serializer.validated_data.get("password")
-        user = authenticate(email=email, password=password)
-        if user is not None:
-            tokens = get_tokens_for_user(user)
-            return Response(
-                {"tokens": tokens, "msg": "Login Successful"}, status.HTTP_200_OK
-            )
+        user = serializer.validated_data["user"]
+        tokens = get_tokens_for_user(user)
+
         return Response(
-            {"errors": {"non_field_errors": ["Email of password is not valid"]}},
-            status.HTTP_404_NOT_FOUND,
-        )
+            {
+                "tokens": tokens, 
+                "msg": "Login Successful",
+                "user":{
+                    "id": user.id,
+                    "email": user.email,
+                    "name": user.name,
+                    "username": user.username
+                }
+            }, status.HTTP_200_OK)
+    
     return Response(serializer.errors, status.HTTP_400_BAD_REQUEST)
 
 
@@ -167,11 +169,16 @@ def delete_code_snippet(request, pk):
     return Response({"msg": "Successfully deleted "}, status=status.HTTP_200_OK)
 
 
-@api_view(["POST"])
-@permission_classes([IsAuthenticated])
+@api_view(["POST"]) 
+@permission_classes([AllowAny])
 def logout_view(request):
     try:
-        refresh_token = request.data["refresh_token"]
+        refresh_token = request.data.get("refresh_token")
+        if not refresh_token:
+            return Response(
+                {"msg": "Refresh token is required"}, status=status.HTTP_400_BAD_REQUEST
+            )
+        
         token = RefreshToken(refresh_token)
         token.blacklist()
 

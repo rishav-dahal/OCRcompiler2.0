@@ -2,6 +2,8 @@ from rest_framework import serializers
 from .models import User, Guest, CodeSnippet, OCRProcess
 from .services.code_formatter import format_code
 from django.db import transaction
+from django.contrib.auth import authenticate
+from  django.contrib.auth import get_user_model
 
 
 class CodeSnippetSerializer(serializers.ModelSerializer):
@@ -74,10 +76,29 @@ class UserSerializer(serializers.ModelSerializer):
         serializer = CodeSnippetSerializer(snippets, many=True)
         return serializer.data
 
+User = get_user_model()
 
-class UserLoginSerializer(serializers.ModelSerializer):
+class UserLoginSerializer(serializers.Serializer): #Serializer instead of ModelSerializer – No need to serialize a full user model.
     email = serializers.EmailField(max_length=255, min_length=3)
+    password = serializers.CharField(max_length=128, write_only=True)
 
+    def validate(self, data):
+        email = data.get("email")
+        password = data.get("password")
+
+        if not email or not password:
+            raise serializers.ValidationError("Must include 'email' and 'password'.")
+        
+        user = authenticate(email=email, password=password)
+        if not user:
+            raise serializers.ValidationError("Invalid credentials.")
+        
+        if not user.is_active:
+            raise serializers.ValidationError("User account is disabled.")
+        
+        data["user"] = user
+        return data
+    
     class Meta:
         model = User
         fields = ["email", "password"]
